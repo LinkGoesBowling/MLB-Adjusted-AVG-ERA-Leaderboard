@@ -11,9 +11,9 @@ for a hit, determined by the scorer).
 AVG Formula: H/AB
 Rounding: Nearest thousandth (ex. .343)
 */
-const getData = fetch('https://api.bigballsdata.com/v1/players/{player_id}/stats?sport=baseball', { //tool used: https://www.scrapingbee.com/curl-converter/javascript-fetch/
+const getData = fetch('https://api.bigballsdata.com/v1/players/:id/stats?sport=baseball', { //tool used: https://www.scrapingbee.com/curl-converter/javascript-fetch/
     headers: {
-        'Authorization': 'Bearer bbs_live_00000FQfo2ituNAqIBd98eazIP9M8HnT90MaSwLOBcgFMR5E'
+        'Authorization': 'Bearer bbs_live_00000FQfo2ituNAqIBd98eazIP9M8HnT90MaSwLOBcgFMR5E' //was not hidden because it is a free plan
     }
 });
 console.log(getData);
