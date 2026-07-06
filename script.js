@@ -11,10 +11,10 @@ for a hit, determined by the scorer).
 AVG Formula: H/AB
 Rounding: Nearest thousandth (ex. .343)
 */
+let id = 660271; //should be Ohtani
 const getData = fetch('https://api.bigballsdata.com/v1/players/' + id + '/stats?sport=baseball', { //tool used: https://www.scrapingbee.com/curl-converter/javascript-fetch/
     headers: {
         'Authorization': 'Bearer bbs_live_00000FQfo2ituNAqIBd98eazIP9M8HnT90MaSwLOBcgFMR5E' //was not hidden because it is a free plan
     }
 });
-let id = 660271; //should be Ohtani
 console.log(getData);
