@@ -4,13 +4,13 @@
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 <div class="avg-era-tabs">
   <h2>Select stats:</h2>
-  <button class="era-tab" id="eraTab">ERA</button>
-  <button class="avg-tab" id="avgTab">AVG</button>
+  <button class="era-tab" id="eraTab" onclick="switchToERA()">ERA</button>
+  <button class="avg-tab" id="avgTab" onclick="switchToAvg()">AVG</button>
 </div>
 <div class="nl-al-tabs">
   <h2>Select league:</h2>
-  <button class="nl-tab" id="nlTab">NL</button>
-  <button class="al-tab" id="alTab">AL</button>
+  <button class="nl-tab" id="nlTab" onclick="switchToNL()">NL</button>
+  <button class="al-tab" id="alTab" onclick="switchToAL()">AL</button>
 </div>
 <ol class="player-ranks" id="playerRanks">
   <li class="players" id="rank1"></li>
