@@ -21,6 +21,7 @@ async function getERAData() {
     for (let i = 0; i < 20; i++) {
         const playerData = pData.stats[0].splits[i];
         const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
+        console.log(minimumInnings); //for testing
         if (playerData.stat.inningsPitched < minimumInnings){
             continue;
         }
