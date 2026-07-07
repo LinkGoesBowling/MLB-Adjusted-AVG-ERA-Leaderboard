@@ -18,14 +18,8 @@ async function getERAData() {
         "https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + new Date().getFullYear() + "&limit=5000"
     );
     const data = await response.json();
-    for (let i = 0; i < data.stats[0].splits.length; i++) {
-        var playerData = data.stats[0].splits[i]; //var used for function scope
-    }
-    if (playerData.stat.eraRank === 1){
-        let changeRank1 = document.getElementById("rank1");
-        changeRank1.textContent = playerData.player.fullName;
-        console.log("Random player with 0.00 ERA: " + playerData.player.fullName);
-    }
+    let changeRank1 = document.getElementById("rank1");
+    changeRank1.textContent = data.stats[0].splits[0];
 }
 /* function getAVGData(id){
     const apiURL = fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=' + new Date().getFullYear() + '&limit=5000');
