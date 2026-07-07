@@ -22,11 +22,11 @@ async function getERAData() {
         const playerData = pData.stats[0].splits[i];
         const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
         if (playerData.stat.inningsPitched < minimumInnings){
+            console.log("Non-qualified: " + playerData.player.fullName + ", ERA: " + playerData.stat.era + ", IP: " + playerData.stat.inningsPitched);
             continue;
-            console.log("Non-qualified pitchers: " + playerData.player.fullName + ", ERA: " + playerData.stat.era + ", IP: " + playerData.stat.inningsPitched);
         }
         if (playerData.stat.inningsPitched >= minimumInnings){
-            console.log("Qualified pitchers: " + playerData.player.fullName + ", ERA: " + playerData.stat.era + ", IP: " + playerData.stat.inningsPitched);
+            console.log("Qualified: " + playerData.player.fullName + ", ERA: " + playerData.stat.era + ", IP: " + playerData.stat.inningsPitched);
             if (i < 19){
                 let changeRanks = document.getElementById("rank" + (i + 1));
                 changeRanks.textContent = playerData.player.fullName + " " + playerData.stat.era;
