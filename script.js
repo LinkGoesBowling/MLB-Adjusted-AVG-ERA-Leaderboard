@@ -21,13 +21,13 @@ async function getERAData() {
     const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
     for (let i = 0; i < 20; i++) {
         const playerData = pData.stats[0].splits[i];
-        let changeRanks = document.getElementById("rank" + (i + 1));
-        changeRanks.textContent = playerData.player.fullName + ", ERA: " + playerData.stat.era;
         if (playerData.stat.inningsPitched < minimumInnings){
             const modifiedERTotal = playerData.stat.earnedRuns + (minimumInnings - playerData.stat.inningsPitched);
             const adjustedERA = (modifiedERTotal * 9) / minimumInnings;
             //changeRanks.textContent = playerData.player.fullName + ", ERA: " + adjustedERA + ", originial ERA: " + playerData.stat.era;
         }
+        let changeRanks = document.getElementById("rank" + (i + 1));
+        changeRanks.textContent = playerData.player.fullName + ", ERA: " + playerData.stat.era;
     }
 }
 async function getAvgData(){
