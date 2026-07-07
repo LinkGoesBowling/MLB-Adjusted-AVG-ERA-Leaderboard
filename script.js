@@ -23,9 +23,10 @@ async function getERAData() {
         const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
         if (playerData.stat.inningsPitched < minimumInnings){
             continue;
+            console.log("Non-qualified pitchers: " + playerData.player.fullName + ", ERA: " + playerData.stat.era + ", IP: " + playerData.stat.inningsPitched);
         }
         if (playerData.stat.inningsPitched >= minimumInnings){
-            console.log(playerData.player.fullName + ", ERA: " + playerData.stat.era + ", IP: " + playerData.stat.inningsPitched);
+            console.log("Qualified pitchers: " + playerData.player.fullName + ", ERA: " + playerData.stat.era + ", IP: " + playerData.stat.inningsPitched);
             if (i < 19){
                 let changeRanks = document.getElementById("rank" + (i + 1));
                 changeRanks.textContent = playerData.player.fullName + " " + playerData.stat.era;
@@ -33,179 +34,8 @@ async function getERAData() {
         }
     }
 }
-/* function getAVGData(id){
-    const apiURL = fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=' + new Date().getFullYear() + '&limit=5000');
-    for (let i = 0; i < apiURL.length; i++){
-        if (i > 0 && stat[i].average < stat[i - 1].avg){
-            avgRank++;
-        }
-        player[i].avgRank = avgRank;
-    }
-    rankAvg();
-}
-function rankERA(){
-    if player.eraRank = 1 {
-        let changeRank1 = document.getElementById("rank1");
-        changeRank1.textContent = player.name;
-    }
-    if player.eraRank =  2{
-        let changeRank2 = document.getElementById("rank2");
-        changeRank2.textContent = player.name;
-    }
-    if player.eraRank =  3{
-        let changeRank3 = document.getElementById("rank3");
-        changeRank3.textContent = player.name;
-    }
-    if player.eraRank =  4{
-        let changeRank4 = document.getElementById("rank4");
-        changeRank4.textContent = player.name;
-    }
-    if player.eraRank =  5{
-        let changeRank5 = document.getElementById("rank5");
-        changeRank5.textContent = player.name;
-    }
-    if player.eraRank =  6{
-        let changeRank6 = document.getElementById("rank6");
-        changeRank6.textContent = player.name;
-    }
-    if player.eraRank =  7{
-        let changeRank7 = document.getElementById("rank7");
-        changeRank7.textContent = player.name;
-    }
-    if player.eraRank =  8{
-        let changeRank8 = document.getElementById("rank8");
-        changeRank8.textContent = player.name;
-    }
-    if player.eraRank =  9{
-        let changeRank9 = document.getElementById("rank9");
-        changeRank9.textContent = player.name;
-    }
-    if player.eraRank =  10{
-        let changeRank10 = document.getElementById("rank10");
-        changeRank10.textContent = player.name;
-    }
-    if player.eraRank =  11{
-        let changeRank11 = document.getElementById("rank11");
-        changeRank11.textContent = player.name;
-    }
-    if player.eraRank =  12{
-        let changeRank12 = document.getElementById("rank12");
-        changeRank12.textContent = player.name;
-    }
-    if player.eraRank =  13{
-        let changeRank13 = document.getElementById("rank13");
-        changeRank13.textContent = player.name;
-    }
-    if player.eraRank =  14{
-        let changeRank14 = document.getElementById("rank14");
-        changeRank14.textContent = player.name;
-    }
-    if player.eraRank =  15{
-        let changeRank15 = document.getElementById("rank15");
-        changeRank15.textContent = player.name;
-    }
-    if player.eraRank =  16{
-        let changeRank16 = document.getElementById("rank16");
-        changeRank16.textContent = player.name;
-    }
-    if player.eraRank =  17{
-        let changeRank17 = document.getElementById("rank17");
-        changeRank17.textContent = player.name;
-    }
-    if player.eraRank =  18{
-        let changeRank18 = document.getElementById("rank18");
-        changeRank18.textContent = player.name;
-    }
-    if player.eraRank =  19{
-        let changeRank19 = document.getElementById("rank19");
-        changeRank19.textContent = player.name;
-    }
-    if player.eraRank =  20{
-        let changeRank20 = document.getElementById("rank20");
-        changeRank20.textContent = player.name;
-    }
-}
-function rankAvg(){
-    if player.avgRank = 1 {
-        let changeRank1 = document.getElementById("rank1");
-        changeRank1.textContent = player.name;
-    }
-    if player.avgRank =  2{
-        let changeRank2 = document.getElementById("rank2");
-        changeRank2.textContent = player.name;
-    }
-    if player.avgRank =  3{
-        let changeRank3 = document.getElementById("rank3");
-        changeRank3.textContent = player.name;
-    }
-    if player.avgRank =  4{
-        let changeRank4 = document.getElementById("rank4");
-        changeRank4.textContent = player.name;
-    }
-    if player.avgRank =  5{
-        let changeRank5 = document.getElementById("rank5");
-        changeRank5.textContent = player.name;
-    }
-    if player.avgRank =  6{
-        let changeRank6 = document.getElementById("rank6");
-        changeRank6.textContent = player.name;
-    }
-    if player.avgRank =  7{
-        let changeRank7 = document.getElementById("rank7");
-        changeRank7.textContent = player.name;
-    }
-    if player.avgRank =  8{
-        let changeRank8 = document.getElementById("rank8");
-        changeRank8.textContent = player.name;
-    }
-    if player.avgRank =  9{
-        let changeRank9 = document.getElementById("rank9");
-        changeRank9.textContent = player.name;
-    }
-    if player.avgRank =  10{
-        let changeRank10 = document.getElementById("rank10");
-        changeRank10.textContent = player.name;
-    }
-    if player.avgRank =  11{
-        let changeRank11 = document.getElementById("rank11");
-        changeRank11.textContent = player.name;
-    }
-    if player.avgRank =  12{
-        let changeRank12 = document.getElementById("rank12");
-        changeRank12.textContent = player.name;
-    }
-    if player.avgRank =  13{
-        let changeRank13 = document.getElementById("rank13");
-        changeRank13.textContent = player.name;
-    }
-    if player.avgRank =  14{
-        let changeRank14 = document.getElementById("rank14");
-        changeRank14.textContent = player.name;
-    }
-    if player.avgRank =  15{
-        let changeRank15 = document.getElementById("rank15");
-        changeRank15.textContent = player.name;
-    }
-    if player.avgRank =  16{
-        let changeRank16 = document.getElementById("rank16");
-        changeRank16.textContent = player.name;
-    }
-    if player.avgRank =  17{
-        let changeRank17 = document.getElementById("rank17");
-        changeRank17.textContent = player.name;
-    }
-    if player.avgRank =  18{
-        let changeRank18 = document.getElementById("rank18");
-        changeRank18.textContent = player.name;
-    }
-    if player.avgRank =  19{
-        let changeRank19 = document.getElementById("rank19");
-        changeRank19.textContent = player.name;
-    }
-    if player.avgRank =  20{
-        let changeRank20 = document.getElementById("rank20");
-        changeRank20.textContent = player.name;
-    }
+async function getAvgData(){
+    
 }
 function switchToERA(){
     
@@ -219,4 +49,3 @@ function switchToNL(){
 function switchToAL(){
     
 }
-*/
