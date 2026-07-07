@@ -19,27 +19,28 @@ async function getERAData() {
     const pData = await playerAPI.json();
     const tData = await teamAPI.json();
     const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
-    for (let i = 0; i < 20; i++) {
+    const players = pData.stats[0].splits;
+    for (let i = 0; i < players.length; i++) {
         var playerData = pData.stats[0].splits[i]; //var was used for function scope
-        if (playerData.stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
-            const modifiedERTotal = playerData.stat.earnedRuns + (minimumInnings - playerData.stat.inningsPitched);
-            playerData[i].adjustedERA = (modifiedERTotal * 9) / minimumInnings;
+        if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
+            const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
+            players[i].adjustedERA = (modifiedERTotal * 9) / minimumInnings;
             /* let changeRanks = document.getElementById("rank" + (i + 1));
             changeRanks.textContent = playerData.player.fullName + ", ERA: " + adjustedERA + ", originial ERA: " + playerData.stat.era; */
         }
-        if (playerData.stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
-            playerData[i].adjustedERA = playerData.stat.era;
+        if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
+            players[i].adjustedERA = players[i].stat.era;
         }
         /* let changeRanks = document.getElementById("rank" + (i + 1));
         changeRanks.textContent = playerData.player.fullName + ", ERA: " + playerData.stat.era; */
     }
-    for (let i = 0; i < playerData.length; i++){
-        if (i > 0 && playerData[i].adjustedERA > playerData[i - 1].adjustedERA){
+    for (let i = 0; i < players.length; i++){
+        if (i > 0 && players[i].adjustedERA > players[i - 1].adjustedERA){
             eraRank++;
         }
         if (eraRank === 1){
             let changeRanks = document.getElementById("rank1");
-            changeRanks.textContent = playerData[i].player.fullName + ", ERA: " + playerData[i].adjustedERA + ", adjusted from: " + playerData[i].stat.era;
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
         }
     }
 }
