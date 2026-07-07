@@ -14,7 +14,6 @@ Rounding: Nearest thousandth (ex. .343)
 let eraRank = 1;
 let avgRank = 1;
 async function getERAData(season) {
-    let season = new Date().getFullYear(); //current year
     const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
     const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=pitching&season=" + season + "&sportIds=1");
     const pData = await playerAPI.json();
