@@ -22,7 +22,7 @@ async function getERAData() {
 
     console.log(data);
 }
-function getAVGData(id){
+/* function getAVGData(id){
     const apiURL = fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=' + new Date().getFullYear() + '&limit=5000');
     for (let i = 0; i < apiURL.length; i++){
         if (i > 0 && player[i].average < player[i - 1].era){
@@ -208,3 +208,4 @@ function switchToNL(){
 function switchToAL(){
     
 }
+*/
