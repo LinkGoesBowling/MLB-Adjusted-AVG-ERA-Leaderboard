@@ -40,7 +40,7 @@ async function getERAData(season) {
             const adjustedERA = players[i].stat.era
             players[i].adjustedERA = adjustedERA;
             preAdjustmentERA = " ";
-            console.log("Qualified pitcher: " + players[i]);
+            console.log("Qualified pitcher: " + players[i].player.fullName);
         }
     }
     for (let i = 0; i < players.length; i++){ //increase rank if era is higher than other player
