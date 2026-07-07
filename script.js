@@ -14,14 +14,20 @@ Rounding: Nearest thousandth (ex. .343)
 let eraRank = 1;
 let avgRank = 1;
 async function getERAData() {
-    const response = await fetch(
-        "https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + new Date().getFullYear() + "&limit=5000"
-    );
-    const data = await response.json();
+    const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + new Date().getFullYear() + "&limit=5000");
+    const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=pitching&season=" + new Date().getFullYear() + "&sportIds=1");
+    const pData = await playerAPI.json();
+    const tData = await teamAPI.json();
+    const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
     for (let i = 0; i < 20; i++) {
-        const playerData = data.stats[0].splits[i];
+        const playerData = pData.stats[0].splits[i];
         let changeRanks = document.getElementById("rank" + (i + 1));
-        changeRanks.textContent = playerData.player.fullName + " " + playerData.stat.era;
+        changeRanks.textContent = playerData.player.fullName + ", ERA: " + playerData.stat.era;
+        if (playerData.stat.inningsPitched < minimumInnings){
+            const modifiedERTotal = playerData.stat.earnedRuns + (minimumInnings - playerData.stat.inningsPitched);
+            const adjustedERA = (modifiedERTotal * 9) / minimumInnings;
+            changeRanks.textContent = playerData.player.fullName + ", ERA: " + adjustedERA + ", originial ERA: " + playerData.stat.era;
+        }
     }
 }
 async function getAvgData(){
