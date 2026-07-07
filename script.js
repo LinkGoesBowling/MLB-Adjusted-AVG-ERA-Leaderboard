@@ -25,8 +25,11 @@ async function getERAData() {
             continue;
         }
         if (playerData.stat.inningsPitched >= minimumInnings){
-            let changeRanks = document.getElementById("rank" + (i + 1));
-            changeRanks.textContent = playerData.player.fullName + " " + playerData.stat.era;
+            console.log(playerData.player.fullName + ", ERA: " + playerData.stat.era + ", IP: " + playerData.stat.inningsPitched);
+            if (i < 19){
+                let changeRanks = document.getElementById("rank" + (i + 1));
+                changeRanks.textContent = playerData.player.fullName + " " + playerData.stat.era;
+            }
         }
     }
 }
