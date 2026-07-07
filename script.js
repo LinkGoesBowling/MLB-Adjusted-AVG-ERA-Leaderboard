@@ -9,7 +9,7 @@ Batting Average (AVG/BA): The percentage of hits per at bat. An "at bat" or AB i
 walks, hit-by-pitches, sacrifice flies (flyouts that score a runner), and sacrifice bunts (a bunt that moves a runner over. Will not count if hitter was bunting
 for a hit, determined by the scorer).
 AVG Formula: H/AB
-Rounding: Nearest thousandth (ex. .343)
+Rounding: Nearest thousandth (ex. .343) 
 */
 let eraRank = 1;
 let avgRank = 1;
