@@ -22,7 +22,12 @@ async function getERAData(season) {
     const players = pData.stats[0].splits;
     let preAdjustmentERA = " ";
     for (let i = 0; i < players.length; i++) {
-        if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
+        if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
+            const adjustedERA = players[i].stat.era
+            players[i].adjustedERA = adjustedERA;
+            preAdjustmentERA = " ";
+        }
+        else if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
             const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
             let adjustedERA = (modifiedERTotal * 9) / minimumInnings
             adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
@@ -35,12 +40,6 @@ async function getERAData(season) {
             }
             players[i].adjustedERA = adjustedERA;
             preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
-        }
-        if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
-            const adjustedERA = players[i].stat.era
-            players[i].adjustedERA = adjustedERA;
-            preAdjustmentERA = " ";
-            console.log("Qualified pitcher: " + players[i].player.fullName);
         }
     }
     for (let i = 0; i < players.length; i++){ //increase rank if era is higher than other player
