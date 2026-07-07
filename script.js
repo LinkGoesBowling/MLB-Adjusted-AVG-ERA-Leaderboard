@@ -19,7 +19,7 @@ async function getERAData() {
     );
     const data = await response.json();
     for (const playerData of data.stats[0].splits){
-        console.log(playerData.player.fullName + playerData.player.era);
+        console.log(playerData.player.fullName + " " + playerData.stat.era);
     }
 }
 /* function getAVGData(id){
