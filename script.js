@@ -39,7 +39,7 @@ async function getERAData() {
         }
         if (eraRank === 1){
             let changeRanks = document.getElementById("rank1");
-            changeRanks.textContent = playerData[i].player.fullName + ", ERA: " + ;
+            changeRanks.textContent = playerData[i].player.fullName + ", ERA: " + playerData[i].stat.adjustedERA + ", adjusted from: " + playerData[i].stat.era;
         }
     }
 }
