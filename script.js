@@ -18,7 +18,7 @@ async function getERAData() {
     const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=pitching&season=" + new Date().getFullYear() + "&sportIds=1");
     const pData = await playerAPI.json();
     const tData = await teamAPI.json();
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < data.stats[0].splits.length; i++) {
         const playerData = pData.stats[0].splits[i];
         const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
         console.log(playerData.player.fullName + " " + playerData.stat.inningsPitched); //also for testing
