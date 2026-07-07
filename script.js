@@ -27,7 +27,7 @@ async function getERAData(season) {
             let adjustedERA = (modifiedERTotal * 9) / minimumInnings
             adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
             players[i].adjustedERA = adjustedERA;
-            preAdjustedERA = ", adjusted from: " + players[i].stat.era;
+            preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
         }
         if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
             let adjustedERA = players[i].stat.era
