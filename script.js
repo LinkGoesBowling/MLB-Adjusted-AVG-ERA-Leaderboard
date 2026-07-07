@@ -13,26 +13,17 @@ Rounding: Nearest thousandth (ex. .343)
 */
 let eraRank = 1;
 let avgRank = 1;
-function getERAData(id){
-    const apiURL = fetch('https://api.bigballsdata.com/v1/players/:' + id + '/stats?sport=baseball', {
-        headers: {
-            'Authorization': 'Bearer bbs_live_00000FQfo2ituNAqIBd98eazIP9M8HnT90MaSwLOBcgFMR5E' //was not hidden because it is a free plan
-        }
-    });
-    for (let i = 0; i < apiURL.length; i++){
-        if (i > 0  && player[i].era < player[i - 1].era){
-            eraRank++;
-        }
-        player[i].eraRank = eraRank;
-    }
-    rankERA();
+async function getERAData() {
+    const response = await fetch(
+        "https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + new Date().getFullYear() + "&limit=5000"
+    );
+
+    const data = await response.json();
+
+    console.log(data);
 }
 function getAVGData(id){
-    const apiURL = fetch('https://api.bigballsdata.com/v1/players/:' + id + '/stats?sport=baseball', {
-        headers: {
-            'Authorization': 'Bearer bbs_live_00000FQfo2ituNAqIBd98eazIP9M8HnT90MaSwLOBcgFMR5E' //was not hidden because it is a free plan
-        }
-    });
+    const apiURL = fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=' + new Date().getFullYear() + '&limit=5000');
     for (let i = 0; i < apiURL.length; i++){
         if (i > 0 && player[i].average < player[i - 1].era){
             avgRank++;
