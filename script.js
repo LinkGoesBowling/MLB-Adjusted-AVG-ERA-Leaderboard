@@ -24,12 +24,14 @@ async function getERAData() {
         var playerData = pData.stats[0].splits[i]; //var was used for function scope
         if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
             const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
-            players[i].adjustedERA = (modifiedERTotal * 9) / minimumInnings;
+            const adjustedERA = (modifiedERTotal * 9) / minimumInnings
             adjustedERA.toFixed(2); //rounds to nearest hundredth
+            players[i].adjustedERA = adjustedERA;
         }
         if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
-            players[i].adjustedERA = players[i].stat.era;
+            const adjustedERA = players[i].stat.era
             adjustedERA.toFixed(2); //rounds to nearest hundredth
+            players[i].adjustedERA = adjustedERA;
         }
     }
     for (let i = 0; i < players.length; i++){
