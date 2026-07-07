@@ -19,7 +19,7 @@ async function getERAData() {
     );
     const data = await response.json();
     for (let i = 0; i < data.stats[0].splits.length; i++) {
-        const playerData = data.stats[0].splits[i];
+        var playerData = data.stats[0].splits[i]; //var used for function scope
     }
     if (playerData.stat.eraRank === 1){
         let changeRank1 = document.getElementById("rank1");
