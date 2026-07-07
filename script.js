@@ -24,6 +24,7 @@ async function getERAData() {
     if (playerData.stat.eraRank === 1){
         let changeRank1 = document.getElementById("rank1");
         changeRank1.textContent = playerData.player.fullName;
+        console.log("Random player with 0.00 ERA: " + playerData.player.fullName
     }
 }
 /* function getAVGData(id){
