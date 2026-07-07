@@ -21,9 +21,11 @@ async function getERAData() {
     for (let i = 0; i < pData.stats[0].splits.length; i++) {
         const playerData = pData.stats[0].splits[i];
         const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
-        console.log(playerData.player.fullName + " " + playerData.stat.inningsPitched); //also for testing
         if (playerData.stat.inningsPitched < minimumInnings){
             continue;
+        }
+        if (playerData.stat.inningsPitched >= minimumInnings){
+            console.log(playerData.player.fullName + " " + playerData.stat.era);
         }
         if (i < 20){
             let changeRanks = document.getElementById("rank" + (i + 1));
