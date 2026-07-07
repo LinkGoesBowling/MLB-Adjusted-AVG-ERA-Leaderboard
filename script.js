@@ -17,10 +17,10 @@ async function getERAData() {
     const response = await fetch(
         "https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + new Date().getFullYear() + "&limit=5000"
     );
-
     const data = await response.json();
-
-    console.log(data);
+    for (const playerData of data.stats[0].splits){
+        console.log(playerData.player.fullName + playerData.player.era);
+    }
 }
 /* function getAVGData(id){
     const apiURL = fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=' + new Date().getFullYear() + '&limit=5000');
