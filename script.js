@@ -25,12 +25,12 @@ async function getERAData() {
         if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
             const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
             const adjustedERA = (modifiedERTotal * 9) / minimumInnings
-            parseFloat(adjustedERA.toFixed(2)); //rounds to nearest hundredth
+            Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
             players[i].adjustedERA = adjustedERA;
         }
         if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
             const adjustedERA = players[i].stat.era
-            parseFloat(adjustedERA.toFixed(2)); //rounds to nearest hundredth
+            Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
             players[i].adjustedERA = adjustedERA;
         }
     }
