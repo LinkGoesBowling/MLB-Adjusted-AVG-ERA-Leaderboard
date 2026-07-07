@@ -43,6 +43,42 @@ async function getERAData() {
             let changeRanks = document.getElementById("rank1");
             changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
         }
+        if (eraRank === 2){
+            let changeRanks = document.getElementById("rank2");
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+        }
+        if (eraRank === 3){
+            let changeRanks = document.getElementById("rank3");
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+        }
+        if (eraRank === 4){
+            let changeRanks = document.getElementById("rank4");
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+        }
+        if (eraRank === 5){
+            let changeRanks = document.getElementById("rank5");
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+        }
+        if (eraRank === 6){
+            let changeRanks = document.getElementById("rank");
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+        }
+        if (eraRank === 7){
+            let changeRanks = document.getElementById("rank");
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+        }
+        if (eraRank === 8){
+            let changeRanks = document.getElementById("rank");
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+        }
+        if (eraRank === 9){
+            let changeRanks = document.getElementById("rank");
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+        }
+        if (eraRank === 10){
+            let changeRanks = document.getElementById("rank");
+            changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + ", adjusted from: " + players[i].stat.era;
+        }
     }
 }
 async function getAvgData(){
