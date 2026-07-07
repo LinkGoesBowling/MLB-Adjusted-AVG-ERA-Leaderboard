@@ -22,9 +22,10 @@ async function getERAData() {
     for (let i = 0; i < 20; i++) {
         const playerData = pData.stats[0].splits[i];
         if (playerData.stat.inningsPitched < minimumInnings){
-            const modifiedERTotal = playerData.stat.earnedRuns + (minimumInnings - playerData.stat.inningsPitched);
+            /* const modifiedERTotal = playerData.stat.earnedRuns + (minimumInnings - playerData.stat.inningsPitched);
             const adjustedERA = (modifiedERTotal * 9) / minimumInnings;
-            //changeRanks.textContent = playerData.player.fullName + ", ERA: " + adjustedERA + ", originial ERA: " + playerData.stat.era;
+            changeRanks.textContent = playerData.player.fullName + ", ERA: " + adjustedERA + ", originial ERA: " + playerData.stat.era; */
+            continue;
         }
         let changeRanks = document.getElementById("rank" + (i + 1));
         changeRanks.textContent = playerData.player.fullName + ", ERA: " + playerData.stat.era;
