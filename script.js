@@ -18,11 +18,11 @@ async function getERAData() {
         "https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + new Date().getFullYear() + "&limit=5000"
     );
     const data = await response.json();
-    for (let i = 0; i < data.stats[0].splits.length; i++) {
-        var playerData = data.stats[0].splits[i]; //var used for function scope
+    for (let i = 0; i < 20; i++) {
+        const playerData = data.stats[0].splits[i];
+        let changeRanks = document.getElementById("rank" + (i + 1));
+        changeRanks.textContent = playerData.player.fullName + " " + playerData.stat.era;
     }
-    let changeRank1 = document.getElementById("rank1");
-    changeRank1.textContent = playerData.player.fullName + " " + playerData.stat.era;
 }
 /* function getAVGData(id){
     const apiURL = fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=' + new Date().getFullYear() + '&limit=5000');
