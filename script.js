@@ -21,7 +21,8 @@ async function getERAData() {
     for (let i = 0; i < data.stats[0].splits.length; i++) {
         var playerData = data.stats[0].splits[i]; //var used for function scope
     }
-    console.log(playerData);
+    let changeRank1 = document.getElementById("rank1");
+    changeRank1.textContent = playerData.player.fullName + " " + playerData.stat.era;
 }
 /* function getAVGData(id){
     const apiURL = fetch('https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=' + new Date().getFullYear() + '&limit=5000');
