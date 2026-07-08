@@ -32,14 +32,10 @@ async function getERAData(season) {
         const players = pData.stats[0].splits;
         let preAdjustmentERA = " ";
         for (let i = 0; i < players.length; i++){
-            for (let i = 0; i < (players.length * teams.length); i++){ //find player's team's games played for accurate minimum innings count
-                    if (players[i].team.id !== teams[i].team.id){
-                            console.log("Mismatch: " + players[i].player.fullName + " team: " + teams[i].team.name);
-                            continue;
-                    }
-                    if (players[i].team.id === teams[i].team.id){
-                            var minimumInnings = teams[i].stat.gamesPlayed; //var used for function scope
-                            console.log(players[i].player.fullName + " minimumInnings: " + teams[i].stat.gamesPlayed);
+            for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum innings count
+                    if (players[i].team.id === teams[j].team.id){
+                            var minimumInnings = teams[j].stat.gamesPlayed; //var used for function scope
+                            break;
                     }
             }    
             if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
