@@ -21,7 +21,7 @@ async function getERAData(season) {
         const tData = await teamAPI.json();
         const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed; //not based on any particular team yet
         const players = pData.stats[0].splits;
-        let adjustedERA = " ";
+        let preAdjustmentERA = " ";
         for (let i = 0; i < players.length; i++) {
             if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
                 let adjustedERA = players[i].stat.era
