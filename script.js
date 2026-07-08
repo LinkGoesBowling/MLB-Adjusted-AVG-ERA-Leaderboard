@@ -26,7 +26,6 @@ async function getERAData(season) {
                 const adjustedERA = players[i].stat.era
                 players[i].adjustedERA = adjustedERA;
                 players[i].preAdjustmentERA = " ";
-                console.log("Adjusted ERA: " + players[i].player.fullName + " " + players[i].stat.adjustedERA)
             }
             else if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
                 const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
@@ -41,6 +40,7 @@ async function getERAData(season) {
                 }
                 players[i].adjustedERA = adjustedERA;
                 players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
+                console.log("Adjusted ERA: " + players[i].player.fullName + " " + players[i].adjustedERA);
             }
         }
         for (let i = 0; i < players.length; i++){ //increase rank if era is higher than other player
