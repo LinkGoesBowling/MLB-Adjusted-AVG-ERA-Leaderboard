@@ -32,7 +32,7 @@ async function getERAData(season) {
         const players = pData.stats[0].splits;
         let preAdjustmentERA = " ";
         for (let i = 0; i < players.length; i++){
-            for (let i = 0; i < teams.length; i++){ //find player's team's games played for accurate minimum innings count
+            for (let i = 0; i < (players.length * teams.length); i++){ //find player's team's games played for accurate minimum innings count
                     if (players[i].team.id !== teams[i].team.id){
                             console.log("Mismatch: " + players[i].player.fullName + " team: " + teams[i].team.name);
                             continue;
