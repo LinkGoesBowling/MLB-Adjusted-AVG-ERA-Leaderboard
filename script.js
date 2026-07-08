@@ -58,23 +58,13 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         for (let i = 0; i < players.length; i++) {
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
                 let adjustedAvg = players[i].stat.avg;
-                adjustedAvg = parseFloat(adjustedAvg); //converts adjustedAvg from a string to a number
-                players[i].adjustedAvg = adjustedAvg.toFixed(3).substring(1); //sets player average and fixes formatting e.g. 0.3 -> .300
                 players[i].preAdjustmentAvg = " ";
             }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
                 let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
                 adjustedAvg = Math.round(adjustedAvg * 1000) / 1000; //rounds to nearest thousandth
-                adjustedAvg = adjustedAvg.toString(); //converts to string so it can be modified
-                if (adjustedAvg[2] === undefined){ //if 2nd digit is 0, add a visible 0
-                    adjustedAvg[2] = 0;
-                }
-                if (adjustedAvg[3] === undefined){
-                    adjustedAvg[3] = 0;
-                }
-                if (adjustedAvg[4] === undefined){
-                    adjustedAvg[4] = 0;
-                }
+                adjustedAvg = parseFloat(adjustedAvg); //converts adjustedAvg from a string to a number
+                players[i].adjustedAvg = adjustedAvg.toFixed(3).substring(1); //sets player average and fixes formatting e.g. 0.3 -> .300
                 players[i].adjustedAvg = adjustedAvg;
                 players[i].preAdjustmentAvg = ", adjusted from: " + players[i].stat.avg;
             }
