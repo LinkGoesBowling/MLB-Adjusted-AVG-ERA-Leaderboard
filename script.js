@@ -34,7 +34,7 @@ async function getERAData(season) {
         for (let i = 0; i < players.length; i++){
             for (let i = 0; i < teams.length; i++){ //find player's team's games played for accurate minimum innings count
                     if (players[i].team.id !== teams[i].team.id){
-                            console.log("Mismatch: " + players[i].fullName + " team: " + teams[i].team.name);
+                            console.log("Mismatch: " + players[i].player.fullName + " team: " + teams[i].team.name);
                             continue;
                     }
                     if (players[i].team.id === teams[i].team.id){
