@@ -32,7 +32,7 @@ async function getERAData(season) {
                 const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
                 let adjustedERA = (modifiedERTotal * 9) / minimumInnings
                 adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
-                adjustedERA = parseFloat("adjustedERA"); //converts from string to number
+                adjustedERA = parseFloat(adjustedERA); //converts from string to number
                 players[i].adjustedERA = adjustedERA.toFixed(2); //sets pitcher's ERA to adjusted ERA and fixes formatting e.g. 3 -> 3.00
                 players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
             }
