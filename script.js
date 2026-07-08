@@ -159,8 +159,8 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 players[i].preAdjustmentAvg = ", adjusted from: " + players[i].stat.avg;
             }
         }
-        for (let i = 0; i < players.length; i++){ //increase rank if era is higher than other player
-            if (i > 0 && players[i].adjustedAvg > players[i - 1].adjustedAvg){
+        for (let i = 0; i < players.length; i++){ //increase rank if avg is lower than other players
+            if (i > 0 && players[i].adjustedAvg < players[i - 1].adjustedAvg){
                 avgRank++;
             }
             players.sort((a, b) => a.adjustedAvg - b.adjustedAvg);
