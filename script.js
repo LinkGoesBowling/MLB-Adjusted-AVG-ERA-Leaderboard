@@ -28,7 +28,6 @@ async function getERAData(season) {
         const pData = await playerAPI.json();
         const tData = await teamAPI.json();
         const teams = tData.stats[0].splits;
-        //const minimumInnings = tData.stats[0].splits[0].stat.gamesPlayed;
         const players = pData.stats[0].splits;
         let preAdjustmentERA = " ";
         for (let i = 0; i < players.length; i++){
@@ -83,9 +82,14 @@ stat = "avg";
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=hitting&season=" + season + "&sportIds=1");
         const pData = await playerAPI.json();
         const tData = await teamAPI.json();
-        const minimumPlateAppearances = (tData.stats[0].splits[0].stat.gamesPlayed) * 3.1; //not based on any particular team yet
         const players = pData.stats[0].splits;
         for (let i = 0; i < players.length; i++) {
+            for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
+                    if (players[i].team.id === teams[j].team.id){
+                            var minimumPlateAppearances = (teams[j].stat.gamesPlayed) * 3.1; //var used for function scope
+                            break;
+            }
+            } //add bracket here if there is a bracket error 
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
                 let adjustedAvg = players[i].stat.avg;
                 players[i].adjustedAvg = adjustedAvg;
