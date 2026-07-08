@@ -38,6 +38,7 @@ async function getERAData(season) {
                     }
                     if (players[i].team.id === teams[i].team.id){
                             var minimumInnings = teams[i].stat.gamesPlayed; //var used for function scope
+                            return;
                     }
             }    
             if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
