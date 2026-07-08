@@ -93,6 +93,9 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
 function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === true){
                 colorNonQualifiedPlayers = false;
+                const changeRanks = document.getElementById("playerRanks"){
+                        changeRanks.style.color = "black" //changes all player names back to black
+                }
                 return;
         }
         if (colorNonQualifiedPlayers === false){
