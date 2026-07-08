@@ -27,7 +27,7 @@ stat = "era";
         for (let i = 0; i < players.length; i++) {
             if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
                 let adjustedERA = parseFloat(players[i].stat.era);
-                players[i].adjustedERA = adjustedERA;
+                players[i].adjustedERA = adjustedERA; //still uses adjustedERA to compare players to each other
                 players[i].preAdjustmentERA = " ";
                 players[i].isQualified = true;
             }
@@ -35,8 +35,8 @@ stat = "era";
                 const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
                 let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
                 adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
-                adjustedERA = parseFloat(adjustedERA); //converts from string to number
-                players[i].adjustedERA = adjustedERA.toFixed(2); //sets pitcher's ERA to adjusted ERA and fixes formatting e.g. 3 -> 3.00
+                adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
+                players[i].adjustedERA = adjustedERA;
                 players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
                 players[i].isQualified = false;
             }
@@ -76,7 +76,12 @@ stat = "avg";
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
                 let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
                 adjustedAvg = Math.round(adjustedAvg * 1000) / 1000; //rounds to nearest thousandth
-                adjustedAvg = "." + adjustedAvg.toString().split('.')[1];; //removes 0 from start e.g. 0.321 -> .321
+                if (adjustedAvg === 1){
+                        adjustedAvg = 1.000; //perfect averages appear as 1.000 (only really useful for first few days of season)
+                }
+                else{
+                        adjustedAvg = "." + (adjustedAvg.toString().split('.')[1] * 100); //format correction: removes leading 0 and adds 0 for every 0 digit (e.g. 0.3 -> .300)
+                }
                 players[i].adjustedAvg = adjustedAvg;
                 players[i].preAdjustmentAvg = ", adjusted from: " + players[i].stat.avg; //add adjustment message
                 players[i].isQualified = false; //marks player as non-qualified so it appears as red
