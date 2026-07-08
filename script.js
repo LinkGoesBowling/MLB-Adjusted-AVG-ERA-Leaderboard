@@ -15,7 +15,6 @@ let eraRank = 1;
 let avgRank = 1;
 let stat = "era"
 async function getERAData(season) {
-    if (stat === "era"){
         const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=pitching&season=" + season + "&sportIds=1");
         const pData = await playerAPI.json();
@@ -129,10 +128,8 @@ async function getERAData(season) {
                 changeRanks.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
             }
         }
-    }
 }
 async function getAvgData(){ //uses same structure as getERAData, but with avg
-    if (stat === "avg"){
         const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=hitting&season=" + season + "&sportIds=1");
         const pData = await playerAPI.json();
@@ -248,15 +245,6 @@ async function getAvgData(){ //uses same structure as getERAData, but with avg
                 changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
             }
         }
-    }
-}
-function switchToERA(){
-    stat="era";
-    getERAData();
-}
-function switchToAvg(){
-    stat="avg";
-    getAvgData();
 }
 function switchToNL(){
     
