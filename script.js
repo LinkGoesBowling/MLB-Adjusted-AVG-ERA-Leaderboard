@@ -52,6 +52,9 @@ stat = "era";
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
                 }
+                if (players[i].isQualified === true){
+                        changeRank.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
+                }
             }
         }
 }
@@ -89,6 +92,9 @@ stat = "avg";
                 changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
+                }
+                if (players[i].isQualified === true){
+                        changeRank.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
                 }
             }
         }
