@@ -32,14 +32,7 @@ async function getERAData(season) {
                 const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
                 let adjustedERA = (modifiedERTotal * 9) / minimumInnings
                 adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
-                adjustedERA = adjustedERA.toString(); //converts to string so it can be modified
-                if (adjustedERA[3] === undefined){ //if 3rd digit is 0, add a visible 0
-                    adjustedERA[3] = 0;
-                }
-                if (adjustedERA[4] === undefined){
-                    adjustedERA[4] = 0;
-                }
-                players[i].adjustedERA = adjustedERA;
+                players[i].adjustedERA = adjustedERA.toFixed(2); //sets pitcher's ERA to adjusted ERA and fixes formatting e.g. 3 -> 3.00
                 players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
             }
         }
@@ -64,7 +57,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         for (let i = 0; i < players.length; i++) {
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
                 let adjustedAvg = players[i].stat.avg;
-                players[i].adjustedAvg = adjustedAvg;
+                players[i].adjustedAvg = adjustedAvg.toFixed(3).substring(1); //sets player average and fixes formatting e.g. 0.3 -> .300
                 players[i].preAdjustmentAvg = " ";
             }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
