@@ -65,7 +65,10 @@ async function getERAData(season) {
                         changeRank.style.color = "red"; //changes non-qualified players to red
                 }
                 if (players[i].isQualified === true){
-                        changeRank.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
+                        changeRank.style.color = "black"; //when changing from avg to ERA, reset qualified players to black
+                }
+                if (colorNonQualifiedPlayers === false){
+                        changeRank.style.color = "black"; //reset all players to black
                 }
             }
         }
@@ -83,6 +86,7 @@ stat = "avg";
         const pData = await playerAPI.json();
         const tData = await teamAPI.json();
         const players = pData.stats[0].splits;
+        const teams = tData.stats[0].splits;
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
                     if (players[i].team.id === teams[j].team.id){
@@ -119,6 +123,9 @@ stat = "avg";
                 }
                 if (players[i].isQualified === true){
                         changeRank.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
+                }
+                if (colorNonQualifiedPlayers === false){
+                        changeRank.style.color = "black"; //resets all players to black
                 }
             }
         }
