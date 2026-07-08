@@ -163,7 +163,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             if (i > 0 && players[i].adjustedAvg < players[i - 1].adjustedAvg){
                 avgRank++;
             }
-            players.sort((a, b) <= a.adjustedAvg - b.adjustedAvg);
+            players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             if (avgRank === 1){ //modify top 20 ranks on website
                 let changeRanks = document.getElementById("rank1");
                 changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
