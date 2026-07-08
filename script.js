@@ -138,7 +138,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         const players = pData.stats[0].splits;
         for (let i = 0; i < players.length; i++) {
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
-                const adjustedAvg = players[i].stat.avg
+                const adjustedAvg = players[i].stat.avg;
                 players[i].adjustedAvg = adjustedAvg;
                 players[i].preAdjustmentAvg = " ";
             }
@@ -163,7 +163,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             if (i > 0 && players[i].adjustedAvg < players[i - 1].adjustedAvg){
                 avgRank++;
             }
-            players.sort((a, b) => a.adjustedAvg - b.adjustedAvg);
+            players.sort((a, b) <= a.adjustedAvg - b.adjustedAvg);
             if (avgRank === 1){ //modify top 20 ranks on website
                 let changeRanks = document.getElementById("rank1");
                 changeRanks.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
