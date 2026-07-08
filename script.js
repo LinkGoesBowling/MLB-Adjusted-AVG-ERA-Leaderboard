@@ -58,6 +58,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         for (let i = 0; i < players.length; i++) {
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
                 let adjustedAvg = players[i].stat.avg;
+                players[i].adjustedAvg = adjustedAvg;
                 players[i].preAdjustmentAvg = " ";
             }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
