@@ -1,5 +1,5 @@
-<h1>MLB Adjusted Leaderboard</h1>
-<title>MLB Adjusted Leaderboard</title>
+<h1>MLB Gwynn Rule Leaderboard</h1>
+<title>MLB Gwynn Rule Leaderboard</title>
 <script src="script.js"></script>
 <head>
   <link rel="stylesheet" href="styles.css">
@@ -20,6 +20,7 @@
   <button class="al-tab" id="alTab" onclick="switchToAL()">AL</button>
 </div>
 <input type="checkbox" onchange="changeQualifiedPlayerRule()" checked>Color non-qualified players in red</input>
+<p class="rule-description" id="ruleDescription">Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title.</p>
 <ol class="player-ranks" id="playerRanks">
   <li class="players" id="rank1"></li>
   <li class="players" id="rank2"></li>
