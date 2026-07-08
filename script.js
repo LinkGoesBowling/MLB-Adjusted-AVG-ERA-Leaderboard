@@ -14,6 +14,7 @@ Rounding: Nearest thousandth (ex. .343)
 let eraRank = 1;
 let avgRank = 1;
 let stat = "era"
+let colorNonQualifiedPlayers = true;
 async function getERAData(season) {
         const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=pitching&season=" + season + "&sportIds=1");
@@ -27,6 +28,7 @@ async function getERAData(season) {
                 let adjustedERA = parseFloat(players[i].stat.era);
                 players[i].adjustedERA = adjustedERA;
                 players[i].preAdjustmentERA = " ";
+                players[i].isQualified = true;
             }
             else if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
                 const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
@@ -35,6 +37,7 @@ async function getERAData(season) {
                 adjustedERA = parseFloat(adjustedERA); //converts from string to number
                 players[i].adjustedERA = adjustedERA.toFixed(2); //sets pitcher's ERA to adjusted ERA and fixes formatting e.g. 3 -> 3.00
                 players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
+                players[i].isQualified = false;
             }
         }
         for (let i = 0; i < players.length; i++){ //increase rank if era is higher than other player
@@ -45,6 +48,9 @@ async function getERAData(season) {
             for (let i = 0; i < 20; i++) {
                 const changeRank = document.getElementById("rank" + (i + 1))
                 changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
+                if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
+                        changeRank.style.color = "red"; //changes non-qualified players to red
+                }
         }
         }
 }
@@ -77,9 +83,22 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             for (let i = 0; i < 20; i++) {
                 const changeRank = document.getElementById("rank" + (i + 1))
                 changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
+                if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
+                        changeRank.style.color = "red"; //changes non-qualified players to red
+                }
         }
         }
         console.log("minimumPlateAppearances: " + minimumPlateAppearances);
+}
+function changeQualifiedPlayerRule(){
+        if (colorNonQualifiedPlayers === true){
+                colorNonQualifiedPlayers = false;
+                return;
+        }
+        if (colorNonQualifiedPlayers === false){
+                colorNonQualifiedPlayers = true;
+                return;
+        }
 }
 function switchToNL(){
     
