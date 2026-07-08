@@ -40,7 +40,6 @@ async function getERAData(season) {
                     if (players[i].team.id === teams[i].team.id){
                             var minimumInnings = teams[i].stat.gamesPlayed; //var used for function scope
                             console.log(players[i].player.fullName + " minimumInnings: " + teams[i].stat.gamesPlayed);
-                            return;
                     }
             }    
             if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
