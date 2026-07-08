@@ -63,7 +63,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         const players = pData.stats[0].splits;
         for (let i = 0; i < players.length; i++) {
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
-                const adjustedAvg = players[i].stat.avg;
+                let adjustedAvg = players[i].stat.avg;
                 players[i].adjustedAvg = adjustedAvg;
                 players[i].preAdjustmentAvg = " ";
             }
