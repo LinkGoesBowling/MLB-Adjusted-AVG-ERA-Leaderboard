@@ -20,6 +20,8 @@ let league = "mlb";
 let currentSeason = new Date().getFullYear();
 async function getERAData(season) {
         stat = "era";
+        const ruleDescription = document.getElementById("ruleDescription");
+        ruleDescription.textContent = "Unofficial rule: If a pitcher falls short of the IP requirement (same as amount of respective player's team's games played), 1 ER and 1 IP will be added for every inning missed.";
         let changeERATab = document.getElementById("eraTab"); //makes ERA tab look selected
         changeERATab.style.backgroundColor = 'white';
         changeERATab.style.border = '2px solid black';
@@ -77,7 +79,9 @@ async function getERAData(season) {
         }
 }
 async function getAvgData(season){ //uses same structure as getERAData, but with avg
-stat = "avg";
+        stat = "avg";
+        const ruleDescription = document.getElementById("ruleDescription");
+        ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
         let changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
         let changeAvgTab = document.getElementById("avgTab"); //makes ERA tab not selected
         changeAvgTab.style.backgroundColor = 'white';
