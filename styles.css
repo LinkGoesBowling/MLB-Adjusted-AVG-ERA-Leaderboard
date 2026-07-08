@@ -1,12 +1,12 @@
 h1{
   font-family: sans-serif;
 }
-.mlb-tab, .era-tab{
+.mlb-tab, .avg-tab{
   font-family: sans-serif;
   background-color: white;
   border: 2px solid black;
 }
-.avg-tab, .nl-tab, .al-tab{
+.era-tab, .nl-tab, .al-tab{
   font-family: sans-serif;
   background-color: gray;
   border: 1px solid black;
