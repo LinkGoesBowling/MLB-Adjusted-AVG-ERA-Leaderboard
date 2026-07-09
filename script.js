@@ -123,7 +123,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
                 if (players[i].team.id === teams[j].team.id){
                         if (league === "nl"){
-                                if !(nlTeams.includes(teams[j].team.id)){
+                                if (!(nlTeams.includes(teams[j].team.id))){
                                         break;
                                 }
                                 else{
