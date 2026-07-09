@@ -124,7 +124,9 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 if (players[i].team.id === teams[j].team.id){
                         if (league === "nl" && nlTeams.includes(teams[j].team.id) || (league === "al" && !(nlTeams.includes(teams[j].team.id))) || (league==="mlb")){
                                 var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
-                                console.log("NL team: " + teams[j].team.name);
+                                if (league === "nl" && nlTeams.includes(teams[j].team.id)){
+                                        console.log("NL team: " + teams[j].team.name);
+                                }
                                 break;
                         }
                         else {
