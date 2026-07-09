@@ -276,7 +276,6 @@ function processInput(){
 }
 function showMorePlayers(){
         playersShown += 20;
-        currentSeason = seasonInputElement.value;
         if (stat === "avg"){
                 getAvgData(currentSeason);
         }
