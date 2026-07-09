@@ -159,21 +159,20 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             }
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < 20; i++) {
-                if (i > 0 && i < 20){ //skips first iteration because rank1 was already created
-                        if (i <= 9){ //align first 10 ranks to left side
-                                const createRanks = document.createElement('li'); //create new li elements and add them to the ol
-                                createRanks.classList.add('rank' + (i + 1), 'rank1-10'); //add class
-                                createRanks.setAttribute('id', 'rank' + (i + 1)); //add id
-                                const ol = document.getElementById('playerRanks');
-                                ol.appendChild(createRanks);
-                        }
-                        if (i > 9 && i <= 20){ //align next 10 to right
-                                const createRanks = document.createElement('li'); //create new li elements and add them to the ol
-                                createRanks.classList.add('rank' + (i + 1), 'rank11-20'); //add class
-                                createRanks.setAttribute('id', 'rank' + (i + 1)); //add id
-                                const ol = document.getElementById('playerRanks');
-                                ol.appendChild(createRanks);
-                        }
+                if (i <= 9){ //align first 10 ranks to left side
+                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
+                         createRanks.classList.add('rank' + (i + 1), 'rank1-10'); //add class
+                        createRanks.setAttribute('id', 'rank' + (i + 1)); //add id
+                        const ol = document.getElementById('playerRanks');
+                        ol.appendChild(createRanks);
+                }
+                if (i > 9 && i <= 20){ //align next 10 to right
+                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
+                         createRanks.classList.add('rank' + (i + 1), 'rank11-20'); //add class
+                          createRanks.setAttribute('id', 'rank' + (i + 1)); //add id
+                          const ol = document.getElementById('playerRanks');
+                          ol.appendChild(createRanks);
+                }
                 }
                 const changeRank = document.getElementById("rank" + (i + 1))
                 changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
