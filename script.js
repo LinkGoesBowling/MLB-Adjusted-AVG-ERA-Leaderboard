@@ -78,7 +78,7 @@ async function getERAData(season) {
                 eraRank++;
             }
             players.sort((a, b) => a.adjustedERA - b.adjustedERA);
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < playersShown; i++) {
                 const changeRank = document.getElementById("rank" + (i + 1))
                 changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
