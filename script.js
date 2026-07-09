@@ -20,6 +20,7 @@ let colorNonQualifiedPlayers = true;
 let league = "mlb";
 let currentSeason = new Date().getFullYear();
 let nlTeams = [119, 134, 115, 137, 146, 120, 144, 138, 112, 143, 109, 121, 113, 135, 173, 155, 123, 132, 195, 124, 150, 224, 199, 187, 208, 299, 297, 213, 196, 129, 220, 126, 209, 166, 148, 221];
+let playersShown = 20;
 async function getERAData(season) {
         stat = "era";
         if (currentSeason < 2013){ //include astros in nl if the season was before 2013. else they are an al team
@@ -158,16 +159,16 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 avgRank++;
             }
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
-                if (ol1.children.length < 20){ //change to 10 for multiple rows
+                if (ol1.children.length < playersShown){ //change to half of playersShown for multiple rows
                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
                         createRanks.classList.add('rank' + (i + 1)); //add class
                         createRanks.setAttribute('id', 'rank' + (i + 1)); //add id
                         ol1.appendChild(createRanks);
                 }
                 /* const ol2 = document.getElementById('playerRanks2'); //commented out because i wanted one row
-                if (ol2.children.length < 10){
+                if (ol2.children.length < (playersShown / 2)){
                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
                         createRanks.classList.add('rank' + (i + 11)); //add class
                         createRanks.setAttribute('id', 'rank' + (i + 11)); //add id
@@ -265,6 +266,16 @@ function switchToAL(){
 }
 function processInput(){
         const seasonInputElement = document.getElementById("seasonInput");
+        currentSeason = seasonInputElement.value;
+        if (stat === "avg"){
+                getAvgData(currentSeason);
+        }
+        if (stat === "era"){
+                getERAData(currentSeason);
+        }
+}
+function showMorePlayers(){
+        playersShown += 20;
         currentSeason = seasonInputElement.value;
         if (stat === "avg"){
                 getAvgData(currentSeason);
