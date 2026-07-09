@@ -1,3 +1,4 @@
+//Programmed by Link Kelly (LinkGoesBowling)
 /* Stats explained:
 Earned Run Average (ERA): The average number of runs a pitcher gives up that is charged against him every 9 innings. An "earned" run is any run a pitcher gives up
 that reached base while they were pitching and did not reach due to an error, including errors charged against the pitcher. For example, if a routine ground ball
@@ -6,8 +7,8 @@ In addition, if a new pitcher enters the game while runners are on base, any run
 ERA Formula: (ER * 9) / IP
 Rounding: Nearest hundredth (ex. 3.15)
 Batting Average (AVG/BA): The percentage of hits per at bat. An "at bat" or AB is defined not by the amount of times the hitter steps up to the plate. It excludes
-walks, hit-by-pitches, sacrifice flies (flyouts that score a runner), and sacrifice bunts (a bunt that moves a runner over. Will not count if hitter was bunting
-for a hit, determined by the scorer).
+walks, hit-by-pitches, sacrifice flies (flyouts that score a runner), sacrifice bunts (a bunt that moves a runner over, will not count if hitter was bunting
+for a hit, determined by the scorer), and catcher's interference.
 AVG Formula: H/AB
 Rounding: Nearest thousandth (ex. .343) 
 */
@@ -122,32 +123,34 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
                 if (players[i].team.id === teams[j].team.id){
-                        if (league === "nl"){
-                                if (!(nlTeams.includes(teams[j].team.id))){
-                                        continue;
-                                }
-                        }
                         var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
                         break;
             }
             }
-            if (minimumPlateAppearances === undefined){
-                    break;
-            }
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
-                let adjustedAvg = players[i].stat.avg;
-                players[i].adjustedAvg = adjustedAvg;
-                players[i].preAdjustmentAvg = " "; //does not add adjustment message
-                players[i].isQualified = true;
+                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && nlTeams(!(includes(players[i].team.id)))){ //check if player is in selected league
+                        let adjustedAvg = players[i].stat.avg;
+                        players[i].adjustedAvg = adjustedAvg;
+                        players[i].preAdjustmentAvg = " "; //does not add adjustment message
+                        players[i].isQualified = true;
+                }
+                else {
+                        players[i].adjustedAvg = -1; //list non-league players last
+                }
             }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
-                let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
-                adjustedAvg = Math.round(adjustedAvg * 1000) / 1000; //rounds to nearest thousandth
-                adjustedAvg = (adjustedAvg * 1).toFixed(3);
-                adjustedAvg = "." + adjustedAvg.toString().split('.')[1]; //removes 0 from start e.g. 0.321 -> .321
-                players[i].adjustedAvg = adjustedAvg;
-                players[i].preAdjustmentAvg = ", adjusted from: " + players[i].stat.avg; //add adjustment message
-                players[i].isQualified = false; //marks player as non-qualified so it appears as red
+                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && nlTeams(!(includes(players[i].team.id)))){ //check if player is in selected league
+                        let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
+                        adjustedAvg = Math.round(adjustedAvg * 1000) / 1000; //rounds to nearest thousandth
+                        adjustedAvg = (adjustedAvg * 1).toFixed(3); //adds trailing 0's if needed. ex. .3 -> .300
+                        adjustedAvg = "." + adjustedAvg.toString().split('.')[1]; //removes 0 from start e.g. 0.321 -> .321
+                        players[i].adjustedAvg = adjustedAvg;
+                        players[i].preAdjustmentAvg = ", adjusted from: " + players[i].stat.avg; //add adjustment message
+                        players[i].isQualified = false; //marks player as non-qualified so it appears as red
+                }
+                else {
+                        players[i].adjustedAvg = -1; //list non-league players last
+                }
             }
         }
         for (let i = 0; i < players.length; i++){ //increase rank if avg is lower than other players
