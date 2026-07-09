@@ -124,13 +124,16 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 if (players[i].team.id === teams[j].team.id){
                         if (league === "nl"){
                                 if (!(nlTeams.includes(teams[j].team.id))){
-                                        break;
+                                        continue;
                                 }
                         }
                         var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
                         break;
             }
-            } //add bracket here if there is a bracket error 
+            }
+            if (minimumPlateAppearances === undefined){
+                    break;
+            }
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
                 let adjustedAvg = players[i].stat.avg;
                 players[i].adjustedAvg = adjustedAvg;
