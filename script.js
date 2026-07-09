@@ -11,7 +11,7 @@ for a hit, determined by the scorer).
 AVG Formula: H/AB
 Rounding: Nearest thousandth (ex. .343) 
 */
-//Note: Variables declared with var were for function scope and were intentionally declared with var. I apologize to the JavaScript community for my villainous act.
+//Note: Variables declared with var were for function scope and were intentionally declared with var. I apologize to the JavaScript community for my villainous act. 
 let eraRank = 1;
 let avgRank = 1;
 let stat = "era";
