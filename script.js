@@ -159,7 +159,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             }
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < 20; i++) {
-                if (i > 0){ //skips first iteration because rank1 was already created
+                if (i > 0 && i < 20){ //skips first iteration because rank1 was already created
                         if (i <= 9){ //align first 10 ranks to left side
                                 const createRanks = document.createElement('li'); //create new li elements and add them to the ol
                                 createRanks.classList.add('rank' + (i + 1), 'rank1-10'); //add class
