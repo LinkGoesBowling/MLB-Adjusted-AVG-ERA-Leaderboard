@@ -178,7 +178,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         createRanks.setAttribute('id', 'rank' + (i + 11)); //add id
                         ol2.appendChild(createRanks);
                 }
-                const changeRank = document.getElementById("rank" + (i + 1))
+                const changeRank = document.getElementById("rank" + (i))
                 changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
