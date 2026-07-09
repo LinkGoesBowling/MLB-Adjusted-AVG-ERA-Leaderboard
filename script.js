@@ -110,7 +110,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
                 if (players[i].team.id === teams[j].team.id){
-                        if ((league === "nl" && nlTeams.includes(teams[j].team.id) || (league === "al" && !(nlTeams.includes(teams[j].team.id))) || (league==="mlb")){
+                        if (league === "nl" && nlTeams.includes(teams[j].team.id) || (league === "al" && !(nlTeams.includes(teams[j].team.id))) || (league==="mlb")){
                                 var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
                                 break;
                         }
