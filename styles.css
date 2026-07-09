@@ -1,14 +1,34 @@
 .mlb-tab, .avg-tab{
   background-color: white;
   border: 2px solid black;
+  display: inline-block;
+  margin-right: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  width: 100px;
+  height: 50px;
+  display: inline-block;
+  margin: 0 0px;
 }
 .era-tab, .nl-tab, .al-tab{
   background-color: gray;
   border: 1px solid black;
+  display: inline-block;
+  margin-right: 0px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 100px;
+  height: 50px;
+  display: inline-block;
+  margin: 0 -5px;
+}
+.nl-tab{
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 .al-tab{
-  background-color: gray;
-  border: 1px solid black;
+  display: inline-block;
+  margin: 0 1px;
 }
 .ols{
   overflow: hidden;
@@ -27,6 +47,19 @@ body{
   font-family: sans-serif;
 }
 .legal-notice{
-  color: gray;
+  color: lightgray;
   text-align: center;
+}
+.show-more-players{
+  background-color: #00BFFF;
+  color: white;
+  border: 0px;
+  height: 40px;
+  border-radius: 10px;
+}
+.go-button{
+  background-color: lightgreen;
+  border: 0px;
+  color: white;
+  border-radius: 10px;
 }
