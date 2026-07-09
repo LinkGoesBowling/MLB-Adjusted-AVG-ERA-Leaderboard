@@ -10,7 +10,7 @@
 <body onload="getAvgData(new Date().getFullYear())">
   <div class="season-input">
     <input type="text" id="seasonInput" placeholder="Enter Season"></input>
-    <button onclick="processInput()">Go</button>
+    <button onclick="processInput()" class="go-button">Go</button>
   </div>
   <div class="avg-era-tabs">
     <button class="avg-tab" id="avgTab" onclick="getAvgData(currentSeason)">AVG</button>
@@ -21,7 +21,7 @@
     <button class="nl-tab" id="nlTab" onclick="switchToNL()">NL</button>
     <button class="al-tab" id="alTab" onclick="switchToAL()">AL</button>
   </div>
-  <input type="checkbox" onchange="changeQualifiedPlayerRule()" checked>Color non-qualified players in red</input>
+  <input type="checkbox" onchange="changeQualifiedPlayerRule()" checked class="qp-checkbox">Color non-qualified players in red</input>
   <p class="rule-description" id="ruleDescription">Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title.</p>
   <div class="ols" id="ols">
     <ol class="player-ranks" id="playerRanks">
