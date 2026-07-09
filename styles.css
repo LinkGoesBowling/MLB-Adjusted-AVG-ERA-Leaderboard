@@ -1,23 +1,32 @@
-h1{
-  font-family: sans-serif;
-}
 .mlb-tab, .avg-tab{
-  font-family: sans-serif;
   background-color: white;
   border: 2px solid black;
 }
 .era-tab, .nl-tab, .al-tab{
-  font-family: sans-serif;
   background-color: gray;
   border: 1px solid black;
 }
 .al-tab{
-  font-family: sans-serif;
   background-color: gray;
   border: 1px solid black;
 }
-.legal-notice{
+.ols{
+  overflow: hidden;
+}
+.ol2{
+  text-align: right;
+  list-style-position: inside;
+  font-size: 25px;
+  float: right;
+}
+.player-ranks{
+  font-size: 25px;
+  float: left;
+}
+body{
   font-family: sans-serif;
+}
+.legal-notice{
   color: gray;
   text-align: center;
 }
