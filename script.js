@@ -186,7 +186,6 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         changeRank.style.color = "black"; //resets all players to black
                 }
             }
-        }
 }
 function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === true){
