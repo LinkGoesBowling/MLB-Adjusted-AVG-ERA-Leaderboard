@@ -31,7 +31,7 @@ async function getERAData(season) {
                 nationalLeague.remove();
                 switchToMLB();
                 var mlbTab = document.getElementById("mlbTab");
-                mlbTab.style.border-radius = '10px';
+                mlbTab.style.borderRadius = '10px';
         }
         if ((currentSeason > 1901) && (currentSeason < 1914) || currentSeason > 1915){ //when NL/AL exist alone
                 if (nationalLeague === null){
@@ -42,7 +42,7 @@ async function getERAData(season) {
                         var leagueTabs = document.getElementById("leagueTabs");
                         leagueTabs.appendChild(createNL);
                         var mlbTab = document.getElementById("mlbTab");
-                        mlbTab.style.border-radius = ' '; //removes rounded corners on right side
+                        mlbTab.style.borderRadius = ' '; //removes rounded corners on right side
                 }
                 if (americanLeague === null){
                         var createAL = document.createElement('button');
@@ -67,7 +67,7 @@ async function getERAData(season) {
                         var leagueTabs = document.getElementById("leagueTabs");
                         leagueTabs.appendChild(createNL);
                         var mlbTab = document.getElementById("mlbTab");
-                        mlbTab.style.border-radius = ' '; //removes rounded corners on right side
+                        mlbTab.style.borderRadius = ' '; //removes rounded corners on right side
                 }
                 if (americanLeague === null){
                         var createAL = document.createElement('button');
