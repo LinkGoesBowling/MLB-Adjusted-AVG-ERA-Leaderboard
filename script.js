@@ -143,7 +143,7 @@ async function getERAData(season) {
                         ol1.appendChild(createRanks);
                 }
                 const changeRank = document.getElementById("rank" + (i + 1));
-                if (league === "nl" && players[i].league.name === "NL") || league === "mlb" || league === "al" && players[i].league.name === "AL")){ //check if player is in selected league
+                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                         changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
                 }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
