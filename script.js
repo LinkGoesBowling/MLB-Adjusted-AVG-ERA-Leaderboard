@@ -156,13 +156,19 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         }
         for (let i = 0; i < players.length; i++){ //increase rank if avg is lower than other players
             if (i > 0 && players[i].adjustedAvg < players[i - 1].adjustedAvg){
-                avgRank++;
+                if (players[i].adjustedAvg === -1){
+                        avgRank = undefined; //do not include non-league players
+                }
+                else{
+                        avgRank++;
+                }
             }
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
-            for (let i = 0; i < playersShown; i++) {
-                const ol1 = document.getElementById('playerRanks');
+            let ol1 = document.getElementById('playerRanks');
+            for (let i = ol1.children.length; i < playersShown; i++) {
                 if (ol1.children.length < playersShown){ //change to half of playersShown for multiple rows
                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
+                        let ol1 = document.getElementById('playerRanks');
                         createRanks.classList.add('rank' + (i + 1 + (playersShown - 20))); //add class
                         createRanks.setAttribute('id', 'rank' + (i + 1 + (playersShown - 20))); //add id
                         ol1.appendChild(createRanks);
