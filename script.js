@@ -19,24 +19,73 @@ let stat = "era";
 let colorNonQualifiedPlayers = true;
 let league = "mlb";
 let currentSeason = new Date().getFullYear();
-let nlTeams = [119, 134, 115, 137, 146, 120, 144, 138, 112, 143, 109, 121, 113, 135, 173, 155, 123, 132, 195, 124, 150, 224, 199, 187, 208, 299, 297, 213, 196, 129, 220, 126, 209, 166, 148, 221];
 let playersShown = 20;
 async function getERAData(season) {
         stat = "era";
-        if (currentSeason < 2013){ //include astros in nl if the season was before 2013. else they are an al team
-                nlTeams.push(117);
-        }
-        if (currentSeason >= 2013){
-                nlTeams.splice(nlTeams.indexOf(117));
-        }
-        if (currentSeason < 1998){ //brewers are nl starting 1998 season. else they are al
-                nlTeams.splice(nlTeams.indexOf(158));
-        }
-        if (currentSeason >= 1998){
-                nlTeams.push(158);
-        }
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Unofficial rule: If a pitcher falls short of the IP requirement (same as amount of respective player's team's games played), 1 ER and 1 IP will be added for every inning missed.";
+        if (currentSeason <= 1901){ //remove AL/NL tabs for seasons before 1901 when there was only NL
+                var americanLeague = document.getElementById("alTab");
+                americanLeague.remove();
+                var nationalLeague = document.getElementById("nlTab");
+                nationalLeague.remove();
+                switchToMLB();
+                var mlbTab = document.getElementById("mlbTab");
+                mlbTab.style.border-radius = '10px';
+        }
+        if ((currentSeason > 1901) && (currentSeason < 1914) || currentSeason > 1915){ //when NL/AL exist alone
+                if (nationalLeague === null){
+                        var createNL = document.createElement('button');
+                        createNL.classList.add('nl-tab');
+                        createNL.setAttribute('id', 'nlTab');
+                        createNL.setAttribute('onclick', 'switchToNL()');
+                        var leagueTabs = document.getElementById("leagueTabs");
+                        leagueTabs.appendChild(createNL);
+                        var mlbTab = document.getElementById("mlbTab");
+                        mlbTab.style.border-radius = ' '; //removes rounded corners on right side
+                }
+                if (americanLeague === null){
+                        var createAL = document.createElement('button');
+                        createAL.classList.add('al-tab');
+                        createAL.setAttribute('id', 'alTab');
+                        createAL.setAttribute('onclick', 'switchToAL()');
+                        leagueTabs.appendChild(createAL);
+                }
+                if (federalLeague !== null){
+                        federalLeague.remove();
+                        if (league === "fl"){
+                                switchToMLB();
+                        }
+                }
+        }
+        if (currentSeason === 1914 || currentSeason === 1915){ //when FL was there
+                if (nationalLeague === null){
+                        var createNL = document.createElement('button');
+                        createNL.classList.add('nl-tab');
+                        createNL.setAttribute('id', 'nlTab');
+                        createNL.setAttribute('onclick', 'switchToNL()');
+                        var leagueTabs = document.getElementById("leagueTabs");
+                        leagueTabs.appendChild(createNL);
+                        var mlbTab = document.getElementById("mlbTab");
+                        mlbTab.style.border-radius = ' '; //removes rounded corners on right side
+                }
+                if (americanLeague === null){
+                        var createAL = document.createElement('button');
+                        createAL.classList.add('al-tab');
+                        createAL.setAttribute('id', 'alTab');
+                        createAL.setAttribute('onclick', 'switchToAL()');
+                        leagueTabs.appendChild(createAL);
+                }
+                if (federalLeague === null){
+                        var createFL = document.createElement('button');
+                        createFL.classList.add('fl-tab');
+                        createFL.setAttribute('id', 'flTab');
+                        createFL.setAttribute('onclick', 'switchToFL()');
+                        createFL.style.border-top-right-radius = '10px';
+                        createFL.style.border-bottom-right-radius = '10px';
+                        leagueTabs.appendChild(createFL);
+                }
+        }
         let changeERATab = document.getElementById("eraTab"); //makes ERA tab look selected
         changeERATab.style.backgroundColor = 'white';
         changeERATab.style.border = '2px solid black';
@@ -58,7 +107,7 @@ async function getERAData(season) {
                     }
             }    
             if (players[i].stat.inningsPitched >= minimumInnings){ //do not adjust qualified players
-                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
+                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL" || league === "fl" && players[i].league.name === "FL"){ //check if player is in selected league
                         adjustedERA = (players[i].stat.era * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
                         players[i].adjustedERA = adjustedERA; //still uses adjustedERA so they can be compared against non-qualifiers
                         players[i].preAdjustmentERA = " ";
@@ -69,7 +118,7 @@ async function getERAData(season) {
                 }
             }
             else if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
-                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
+                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL" || league === "fl" && players[i].league.name === "FL"){ //check if player is in selected league
                         const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
                         let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
                         adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
@@ -94,7 +143,7 @@ async function getERAData(season) {
                         ol1.appendChild(createRanks);
                 }
                 const changeRank = document.getElementById("rank" + (i + 1));
-                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
+                if (league === "nl" && players[i].league.name === "NL") || league === "mlb" || league === "al" && players[i].league.name === "AL")){ //check if player is in selected league
                         changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
                 }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
@@ -111,17 +160,12 @@ async function getERAData(season) {
 }
 async function getAvgData(season){ //uses same structure as getERAData, but with avg
         stat = "avg";
-        if (currentSeason < 2013){ //include astros in nl if the season was before 2013. else they are an al team
-                nlTeams.push(117);
+        if (currentSeason <= 1915){
+                var defunctTeamsNote = document.getElementById("defunctTeamsNote");
+                defunctTeamsNote.textContent = "Note: Players in the defunct Federal League are not included in NL/AL sorting.";
         }
-        if (currentSeason >= 2013){
-                nlTeams.splice(nlTeams.indexOf(117));
-        }
-        if (currentSeason < 1998){ //brewers are nl starting 1998 season. else they are al
-                nlTeams.splice(nlTeams.indexOf(158));
-        }
-        if (currentSeason >= 1998){
-                nlTeams.push(158);
+        if (currentSeason > 1915){
+                defunctTeamsNote.textContent = " ";
         }
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
@@ -145,7 +189,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             }
             }
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
-                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
+                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                         let adjustedAvg = players[i].stat.avg;
                         players[i].adjustedAvg = adjustedAvg;
                         players[i].preAdjustmentAvg = " "; //does not add adjustment message
@@ -156,7 +200,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 }
             }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
-                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
+                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                         let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
                         adjustedAvg = Math.round(adjustedAvg * 1000) / 1000; //rounds to nearest thousandth
                         adjustedAvg = (adjustedAvg * 1).toFixed(3); //adds trailing 0's if needed. ex. .3 -> .300
@@ -181,7 +225,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         ol1.appendChild(createRanks);
                 }
                 const changeRank = document.getElementById("rank" + (i + 1));
-                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
+                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                         changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                 }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
@@ -265,6 +309,27 @@ function switchToAL(){
         alTab.style.backgroundColor = 'white';
         alTab.style.border = '2px solid black';
         league = "al";
+        if (stat === "avg"){
+                getAvgData(currentSeason);
+        }
+        if (stat === "era"){
+                getERAData(currentSeason);
+        }
+}
+function switchToFL(){
+        let mlbTab = document.getElementById("mlbTab");
+        mlbTab.style.backgroundColor = 'gray';
+        mlbTab.style.border = '1px solid black';
+        let nlTab = document.getElementById("nlTab");
+        nlTab.style.backgroundColor = 'gray';
+        nlTab.style.border = '1px solid black';
+        let alTab = document.getElementById("alTab");
+        alTab.style.backgroundColor = 'gray';
+        alTab.style.border = '1px solid black';
+        let flTab = document.getElementById("flTab");
+        flTab.style.backgroundColor = 'white';
+        flTab.style.border = '2px solid black';
+        league = "fl";
         if (stat === "avg"){
                 getAvgData(currentSeason);
         }
