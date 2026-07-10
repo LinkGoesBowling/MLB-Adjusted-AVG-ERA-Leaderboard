@@ -164,8 +164,8 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 if (ol1.children.length < playersShown){ //change to half of playersShown for multiple rows
                         console.log("playersShown: " + playersShown);
                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
-                        createRanks.classList.add('rank' + (i + 1)); //add class
-                        createRanks.setAttribute('id', 'rank' + (i + 1)); //add id
+                        createRanks.classList.add('rank' + (i + 1 + (playersShown - 20))); //add class
+                        createRanks.setAttribute('id', 'rank' + (i + 1 + (playersShown - 20))); //add id
                         ol1.appendChild(createRanks);
                 }
                 /* const ol2 = document.getElementById('playerRanks2'); //commented out because i wanted one row
@@ -175,7 +175,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         createRanks.setAttribute('id', 'rank' + (i + 11)); //add id
                         ol2.appendChild(createRanks);
                 } */
-                const changeRank = document.getElementById("rank" + (i + 1))
+                const changeRank = document.getElementById("rank" + (i + 1 + (playersShown - 20)));
                 changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
