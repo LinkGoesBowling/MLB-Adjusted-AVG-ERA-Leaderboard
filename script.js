@@ -164,6 +164,19 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 }
             }
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
+        for (let i = 0; i < playersShown; i++){ //switches ranks already generated to new filter
+                const changeRank = document.getElementById("rank" + (i + 1 + (playersShown - 20)));
+                  changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
+                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
+                          changeRank.style.color = "red"; //changes non-qualified players to red
+                   }
+                 if (players[i].isQualified === true){
+                           changeRank.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
+                 }
+                  if (colorNonQualifiedPlayers === false){
+                           changeRank.style.color = "black"; //resets all players to black
+                    }
+        }
             let ol1 = document.getElementById('playerRanks');
             for (let i = ol1.children.length; i < playersShown; i++) {
                 if (ol1.children.length < playersShown){ //change to half of playersShown for multiple rows
@@ -180,19 +193,6 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         createRanks.setAttribute('id', 'rank' + (i + 11)); //add id
                         ol2.appendChild(createRanks);
                 } */
-                for (let i = 0; i < playersShown; i++){ //switches ranks already generated to new filter
-                        const changeRank = document.getElementById("rank" + (i + 1 + (playersShown - 20)));
-                        changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-                        if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
-                                changeRank.style.color = "red"; //changes non-qualified players to red
-                        }
-                        if (players[i].isQualified === true){
-                                changeRank.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
-                        }
-                        if (colorNonQualifiedPlayers === false){
-                                changeRank.style.color = "black"; //resets all players to black
-                        }
-                }
             }
         }
 }
