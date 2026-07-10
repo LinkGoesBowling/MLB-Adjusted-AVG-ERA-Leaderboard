@@ -65,7 +65,7 @@ async function getERAData(season) {
                         players[i].isQualified = true;
                 }
                 else{
-                        players[i].adjustedERA = NaN;
+                        players[i].adjustedERA = Infinity;
                 }
             }
             else if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
