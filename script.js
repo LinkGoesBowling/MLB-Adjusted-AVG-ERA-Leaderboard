@@ -156,20 +156,17 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         }
         for (let i = 0; i < players.length; i++){ //increase rank if avg is lower than other players
             if (i > 0 && players[i].adjustedAvg < players[i - 1].adjustedAvg){
-                if (players[i].adjustedAvg === -1){
-                        avgRank = undefined; //do not include non-league players
-                }
-                else{
-                        avgRank++;
-                }
+                avgRank++;
             }
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
-            let ol1 = document.getElementById('playerRanks');
             for (let i = 0; i < playersShown; i++) {
-                const createRanks = document.createElement('li'); //create new li elements and add them to the ol
-                createRanks.classList.add('rank' + (i + 1 + (playersShown - 20))); //add class
-                createRanks.setAttribute('id', 'rank' + (i + 1 + (playersShown - 20))); //add id
-                ol1.appendChild(createRanks);
+                const ol1 = document.getElementById('playerRanks');
+                if (ol1.children.length < playersShown){ //change to half of playersShown for multiple rows
+                        const createRanks = document.createElement('li'); //create new li elements and add them to the ol
+                        createRanks.classList.add('rank' + (i + 1 + (playersShown - 20))); //add class
+                        createRanks.setAttribute('id', 'rank' + (i + 1 + (playersShown - 20))); //add id
+                        ol1.appendChild(createRanks);
+                }
                 /* const ol2 = document.getElementById('playerRanks2'); //commented out because i wanted one row
                 if (ol2.children.length < (playersShown / 2)){
                         const createRanks = document.createElement('li'); //create new li elements and add them to the ol
@@ -177,18 +174,16 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         createRanks.setAttribute('id', 'rank' + (i + 11)); //add id
                         ol2.appendChild(createRanks);
                 } */
-                for (let i = 0; i < playersShown; i++){ //switches ranks already generated to new filter
-                        const changeRank = document.getElementById("rank" + (i + 1 + (playersShown - 20)));
-                        changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
-                        if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
-                                changeRank.style.color = "red"; //changes non-qualified players to red
-                        }
-                        if (players[i].isQualified === true){
-                                changeRank.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
-                        }
-                        if (colorNonQualifiedPlayers === false){
-                                changeRank.style.color = "black"; //resets all players to black
-                        }
+                const changeRank = document.getElementById("rank" + (i + 1 + (playersShown - 20)));
+                changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
+                if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
+                        changeRank.style.color = "red"; //changes non-qualified players to red
+                }
+                if (players[i].isQualified === true){
+                        changeRank.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
+                }
+                if (colorNonQualifiedPlayers === false){
+                        changeRank.style.color = "black"; //resets all players to black
                 }
             }
         }
