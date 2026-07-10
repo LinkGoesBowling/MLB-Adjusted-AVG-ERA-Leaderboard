@@ -29,6 +29,7 @@ async function getERAData(season) {
                 americanLeague.remove();
                 var nationalLeague = document.getElementById("nlTab");
                 nationalLeague.remove();
+                var federalLeague = document.getElementById("flTab");
                 switchToMLB();
                 var mlbTab = document.getElementById("mlbTab");
                 mlbTab.style.borderRadius = '10px';
