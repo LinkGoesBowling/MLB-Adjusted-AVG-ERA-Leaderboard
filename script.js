@@ -64,31 +64,38 @@ async function getERAData(season) {
                 players[i].isQualified = true;
             }
             else if (players[i].stat.inningsPitched < minimumInnings){ //adjustment for non-qualified players
-                const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
-                let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
-                adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
-                adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
-                players[i].adjustedERA = adjustedERA;
-                players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
-                players[i].isQualified = false;
+                if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
+                        const modifiedERTotal = players[i].stat.earnedRuns + (minimumInnings - players[i].stat.inningsPitched);
+                        let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
+                        adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
+                        adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
+                        players[i].adjustedERA = adjustedERA;
+                        players[i].preAdjustmentERA = ", adjusted from: " + players[i].stat.era;
+                        players[i].isQualified = false;
+                    }
             }
+                else{
+                        players[i].adjustedERA = -1;
+                }
         }
-        for (let i = 0; i < players.length; i++){ //increase rank if era is higher than other player
-            if (i > 0 && players[i].adjustedERA > players[i - 1].adjustedERA){
-                eraRank++;
-            }
+        for (let i = 0; i < players.length; i++){
             players.sort((a, b) => a.adjustedERA - b.adjustedERA);
             for (let i = 0; i < playersShown; i++) {
-                const changeRank = document.getElementById("rank" + (i + 1))
-                changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
-                if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
-                        changeRank.style.color = "red"; //changes non-qualified players to red
-                }
-                if (players[i].isQualified === true){
-                        changeRank.style.color = "black"; //when changing from avg to ERA, reset qualified players to black
-                }
-                if (colorNonQualifiedPlayers === false){
-                        changeRank.style.color = "black"; //reset all players to black
+                const ol1 = document.getElementById('playerRanks');
+                if ((ol1.children.length < playersShown) && (ol1.children.length < players.length)){
+                        if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
+                                const changeRank = document.getElementById("rank" + (i + 1))
+                                changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
+                        }
+                        if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
+                                changeRank.style.color = "red"; //changes non-qualified players to red
+                        }
+                        if (players[i].isQualified === true){
+                                changeRank.style.color = "black"; //when changing from avg to ERA, reset qualified players to black
+                        }
+                        if (colorNonQualifiedPlayers === false){
+                                changeRank.style.color = "black"; //reset all players to black
+                        }
                 }
             }
         }
