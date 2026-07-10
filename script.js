@@ -83,8 +83,8 @@ async function getERAData(season) {
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
                 if ((ol1.children.length < playersShown) && (ol1.children.length < players.length)){
+                        const changeRank = document.getElementById("rank" + (i + 1));
                         if (league === "nl" && nlTeams.includes(players[i].team.id) || league === "mlb" || league === "al" && !nlTeams.includes(players[i].team.id)){ //check if player is in selected league
-                                const changeRank = document.getElementById("rank" + (i + 1))
                                 changeRank.textContent = players[i].player.fullName + ", ERA: " + players[i].adjustedERA + players[i].preAdjustmentERA;
                         }
                         if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
