@@ -18,7 +18,7 @@ let avgRank = 1;
 let stat = "era";
 let colorNonQualifiedPlayers = true;
 let league = "mlb";
-let currentSeason = 1996;
+let currentSeason = 1978;
 let playersShown = 20;
 async function getERAData(season) {
         stat = "era";
