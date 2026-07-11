@@ -159,6 +159,7 @@ async function getERAData(season) {
         }
 async function getAvgData(season){ //uses same structure as getERAData, but with avg
         stat = "avg";
+        createColumnBoxes();
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
         let changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
@@ -205,29 +206,6 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         players[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
                 }
             }
-        }
-        const columnBoxes = document.getElementById('columnBoxes');
-        for (let i = 0; i < playersShown; i++){
-                if ((columnBoxes.children.length < playersShown) && (columnBoxes.children.length < players.length)){
-                        const createRank = document.createElement('div');
-                        createRank.classList.add('rank-box');
-                        createRank.setAttribute('id', 'rankBox' + (i + (playersShown - 19)));
-                        columnBoxes.appendChild(createRank);
-                        const createNameRank = document.createElement('div');
-                        createNameRank.classList.add('name-box');
-                        createNameRank.setAttribute('id', 'nameBox' + (i + (playersShown - 19))); //add id
-                        columnBoxes.appendChild(createNameRank);
-                        const createAvgRank = document.createElement('div');
-                        createAvgRank.classList.add('avg-box');
-                        createAvgRank.setAttribute('id', 'avgBox' + (i + (playersShown - 19)));
-                        columnBoxes.appendChild(createAvgRank);
-                        const createPreAdjustRank = document.createElement('div');
-                        createPreAdjustRank.classList.add('pre-adjusted-avg-box');
-                        createPreAdjustRank.setAttribute('id', 'preAdjustBox' + (i + (playersShown - 19)));
-                        columnBoxes.appendChild(createPreAdjustRank);
-                        const createBr = document.createElement('br');
-                        columnBoxes.appendChild(createBr);
-                }
         }
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < playersShown; i++) {
@@ -376,5 +354,30 @@ function showMorePlayers(){
         }
         if (stat === "era"){
                 getERAData(currentSeason);
+        }
+}
+function createColumnBoxes(){
+        const columnBoxes = document.getElementById('columnBoxes');
+        for (let i = 0; i < playersShown; i++){
+                if ((columnBoxes.children.length < playersShown) && (columnBoxes.children.length < players.length)){
+                        const createRank = document.createElement('div');
+                        createRank.classList.add('rank-box');
+                        createRank.setAttribute('id', 'rankBox' + (i + (playersShown - 19)));
+                        columnBoxes.appendChild(createRank);
+                        const createNameRank = document.createElement('div');
+                        createNameRank.classList.add('name-box');
+                        createNameRank.setAttribute('id', 'nameBox' + (i + (playersShown - 19))); //add id
+                        columnBoxes.appendChild(createNameRank);
+                        const createAvgRank = document.createElement('div');
+                        createAvgRank.classList.add('avg-box');
+                        createAvgRank.setAttribute('id', 'avgBox' + (i + (playersShown - 19)));
+                        columnBoxes.appendChild(createAvgRank);
+                        const createPreAdjustRank = document.createElement('div');
+                        createPreAdjustRank.classList.add('pre-adjusted-avg-box');
+                        createPreAdjustRank.setAttribute('id', 'preAdjustBox' + (i + (playersShown - 19)));
+                        columnBoxes.appendChild(createPreAdjustRank);
+                        const createBr = document.createElement('br');
+                        columnBoxes.appendChild(createBr);
+                }
         }
 }
