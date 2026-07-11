@@ -240,7 +240,6 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         //changePreAdjust.style.color = "black";
                 }
             }
-}
 function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === true){
                 colorNonQualifiedPlayers = false;
