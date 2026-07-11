@@ -360,7 +360,7 @@ function showMorePlayers(){
 function createColumnBoxes(){
         const columnBoxes = document.getElementById('columnBoxes');
         for (let i = 0; i < playersShown; i++){
-                if ((columnBoxes.children.length < playersShown) && (columnBoxes.children.length < players.length)){
+                if (columnBoxes.children.length < playersShown){
                         const createRank = document.createElement('div');
                         createRank.classList.add('rank-box');
                         createRank.setAttribute('id', 'rankBox' + (i + (playersShown - 19)));
