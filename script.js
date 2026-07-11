@@ -217,16 +217,6 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         createRanks.classList.add('rank' + (i + 1 + (playersShown - 20))); //add class
                         createRanks.setAttribute('id', 'rank' + (i + 1 + (playersShown - 20))); //add id
                         ol1.appendChild(createRanks);
-                        if (rank === 1){ //test for editing columns
-                                const rankBox = document.getElementById("rankBox");
-                                rankBox.textContent = 1;
-                                const nameBox = document.getElementById("nameBox");
-                                nameBox.textContent = players[i].player.fullName;
-                                const avgBox = document.getElementById("avgBox");
-                                avgBox.textContent = players[i].stat.avg;
-                                const preAdjust = document.getElementById("preAdjust");
-                                preAdjust.textContent = players[i].preAdjustmentAvg;
-                        }
                 }
                 const changeRank = document.getElementById("rank" + (i + 1));
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
