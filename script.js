@@ -17,8 +17,8 @@ let eraRank = 1;
 let avgRank = 1;
 let stat = "era";
 let colorNonQualifiedPlayers = true;
-let league = "mlb";
-let currentSeason = 1978;
+let league = "nl";
+let currentSeason = new Date().getFullYear();
 let playersShown = 20;
 async function getERAData(season) {
         stat = "era";
