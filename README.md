@@ -12,7 +12,7 @@
   <figcaption>ERA Ranks, 2026 season, both leagues as of Jul 9, 2026</figcaption>
 </figure>
 <h3>⏳ Status</h3>
-<p>This project is fully functional as I want it to be, but I want to edit the CSS to make it look better.</p>
+<p>As I am revamping the page to look better, the script is broken, but it still lists some of the top players in AVG accurately.</p>
 <h3>📖 About</h2>
 <p>This is a solo project that I created to learn about APIs. It uses HTML, CSS, and JavaScript.</p>
 <p>The website adjusts non-qualified hitters to be with other players by adding hitless at-bats. A famous example of a player that fell short and won was Tony Gwynn in 1996. His original batting average was .353 but then it was adjusted to .349 since he fell short, and then he still won the batting title. I also programmed a rule for pitchers, although it is not based on an official rule that if a player falls short, 1 ER and 1 IP will be added for every missed inning.</p>
