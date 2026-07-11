@@ -219,15 +219,15 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         createRanks.setAttribute('id', 'rank' + (i + (playersShown - 19))); //add id
                         ol1.appendChild(createRanks);
                         const rankBoxes = document.createElement('div');
-                        rankBoxes.classList.add('rank-box' + (i + (playersShown - 19)));
+                        rankBoxes.classList.add('rank-box');
                         rankBoxes.setAttribute('id', 'rankBox' + (i + (playersShown - 19)));
                         columnBoxes.appendChild(rankBoxes);
                         const nameBoxes = document.createElement('div');
-                        nameBoxes.classList.add('name-box' + (i + (playersShown - 19)));
+                        nameBoxes.classList.add('name-box');
                         nameBoxes.setAttribute('id', 'nameBox' + (i + (playersShown - 19)));
                         columnBoxes.appendChild(nameBoxes);
                         const avgBoxes = document.createElement('div');
-                        avgBoxes.classList.add('avg-box' + (i + (playersShown - 19)));
+                        avgBoxes.classList.add('avg-box');
                         avgBoxes.setAttribute('id', 'avgBox' + (i + (playersShown - 19)));
                         columnBoxes.appendChild(avgBoxes);
                         /*const preAdjustBoxes = document.createElement('div');
