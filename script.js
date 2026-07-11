@@ -175,6 +175,7 @@ async function getAvgData(season, stat){ //uses same structure as getERAData, bu
         const pitchersData = await pitchersAPI.json();
         const tData = await teamAPI.json();
         const hitters = hittersData.stats[0].splits;
+        const pitchers = pitchersData.stats[0].splits;
         const teams = tData.stats[0].splits;
         for (let i = 0; i < hitters.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA/inning count
