@@ -211,13 +211,8 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         for (let i = 0; i < players.length; i++){
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < playersShown; i++) {
-                const ol1 = document.getElementById('playerRanks');
                 const columnBoxes = document.getElementById('columnBoxes');
-                if ((ol1.children.length < playersShown) && (ol1.children.length < players.length)){ //change to half of playersShown for multiple rows
-                        const createRanks = document.createElement('div'); //create new li elements and add them to the ol
-                        createRanks.classList.add('rank' + (i + (playersShown - 19))); //add class
-                        createRanks.setAttribute('id', 'rank' + (i + (playersShown - 19))); //add id
-                        ol1.appendChild(createRanks);
+                if ((columnBoxes.children.length < playersShown) && (columnBoxes.children.length < players.length)){ //change to half of playersShown for multiple rows
                         const rankBoxes = document.createElement('div');
                         rankBoxes.classList.add('rank-box');
                         rankBoxes.setAttribute('id', 'rankBox' + (i + (playersShown - 19)));
@@ -237,27 +232,23 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         const br = document.createElement('br');
                         columnBoxes.appendChild(br);
                 }
-                const changeRank = document.getElementById("rank" + (i + 1));
                 const changeRankBox = document.getElementById("rankBox" + (i + 1));
                 const changeNameBox = document.getElementById("nameBox" + (i + 1));
                 const changeAvgBox = document.getElementById("avgBox" + (i + 1));
                 const changePreAdjust = document.getElementById("preAdjustBox" + (i + 1));
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
-                        changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                         changeRankBox.textContent = (i + 1);
                         changeNameBox.textContent = players[i].player.fullName;
                         changeAvgBox.textContent = players[i].adjustedAvg;
                         changePreAdjust.textContent = players[i].stat.avg;
                 }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
-                        changeRank.style.color = "red"; //changes non-qualified players to red
-                        changeRankBox.style.color = "red";
+                        changeRankBox.style.color = "red"; //change non-qualifiers to red when box is checked
                         changeNameBox.style.color = "red";
                         changeAvgBox.style.color = "red";
                         changePreAdjust.style.color = "red";
                 }
-                if (players[i].isQualified === true || colorNonQualifiedPlayers === false){
-                        changeRank.style.color = "black"; //change qualified spots to black and change all spots to black when box is unchecked
+                if (players[i].isQualified === true || colorNonQualifiedPlayers === false){ //change qualified spots to black and change all spots to black when box is unchecked
                         changeRankBox.style.color = "black";
                         changeNameBox.style.color = "black";
                         changeAvgBox.style.color = "black";
