@@ -17,7 +17,7 @@ let eraRank = 1;
 let avgRank = 1;
 let stat = "era";
 let colorNonQualifiedPlayers = true;
-let league = "nl";
+let league = "mlb";
 let currentSeason = new Date().getFullYear();
 let playersShown = 20;
 async function getERAData(season) {
@@ -212,7 +212,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < playersShown; i++) {
                 const columnBoxes = document.getElementById('columnBoxes');
-                if ((columnBoxes.children.length < playersShown) && (columnBoxes.children.length < players.length)){ //change to half of playersShown for multiple rows
+                if ((columnBoxes.children.length < playersShown) && (columnBoxes.children.length < players.length)){
                         const createRank = document.createElement('div');
                         createRank.classList.add('rank-box');
                         createRank.setAttribute('id', 'rankBox' + (i + (playersShown - 19)));
@@ -237,6 +237,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 const changeAvg = document.getElementById("avgBox" + (i + 1));
                 const changePreAdjust = document.getElementById("preAdjust" + (i + 1));
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
+                        console.log(i, changeRank);
                         changeRank.textContent = (i + 1); //edit boxes
                         changeName.textContent = players[i].player.fullName;
                         changeAvg.textContent = players[i].stat.avg;
