@@ -211,26 +211,16 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         for (let i = 0; i < players.length; i++){
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < playersShown; i++) {
-                const ol1 = document.getElementById('playerRanks');
-                if ((ol1.children.length < playersShown) && (ol1.children.length < players.length)){ //change to half of playersShown for multiple rows
+                const nameBox = document.getElementById('nameBox');
+                if ((nameBox.children.length < playersShown) && (nameBox.children.length < players.length)){ //change to half of playersShown for multiple rows
                         const createRanks = document.createElement('div'); //create new li elements and add them to the ol
-                        createRanks.classList.add('rank' + (i + 1 + (playersShown - 20))); //add class
-                        createRanks.setAttribute('id', 'rank' + (i + 1 + (playersShown - 20))); //add id
-                        ol1.appendChild(createRanks);
-                        if (rank === 1){ //test for editing columns
-                                const rankBox = document.getElementById("rankBox");
-                                rankBox.textContent = 1;
-                                const nameBox = document.getElementById("nameBox");
-                                nameBox.textContent = players[i].player.fullName;
-                                const avgBox = document.getElementById("avgBox");
-                                avgBox.textContent = players[i].stat.avg;
-                                const preAdjust = document.getElementById("preAdjust");
-                                preAdjust.textContent = players[i].preAdjustmentAvg;
-                        }
+                        createRanks.classList.add('rank' + (i + (playersShown - 19))); //add class
+                        createRanks.setAttribute('id', 'rank' + (i + (playersShown - 19))); //add id
+                        nameBox.appendChild(createRanks);
                 }
                 const changeRank = document.getElementById("rank" + (i + 1));
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
-                        changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
+                        nameBox.textContent = players[i].player.fullName;
                 }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
