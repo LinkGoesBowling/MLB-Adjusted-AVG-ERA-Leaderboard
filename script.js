@@ -200,7 +200,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         adjustedAvg = (adjustedAvg * 1).toFixed(3); //adds trailing 0's if needed. ex. .3 -> .300
                         adjustedAvg = "." + adjustedAvg.toString().split('.')[1]; //removes 0 from start e.g. 0.321 -> .321
                         players[i].adjustedAvg = adjustedAvg;
-                        players[i].preAdjustmentAvg = ", adjusted from: " + players[i].stat.avg; //add adjustment message
+                        players[i].preAdjustmentAvg = players[i].stat.avg; //add adjustment message
                         players[i].isQualified = false; //marks player as non-qualified so it appears as red
                 }
                 else {
