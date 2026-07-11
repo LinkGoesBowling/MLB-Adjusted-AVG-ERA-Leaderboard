@@ -7,7 +7,8 @@
   <title>MLB Gwynn Rule Leaderboard</title>
   <link rel="shortcut icon" type="image/x-icon" href="https://linkgoesbowling.github.io/MLB-Gwynn-Rule-Leaderboard/favicon.ico">
 </head>
-<body onload="getAvgData(new Date().getFullYear())">
+<!--new Date().getFullYear()-->
+<body onload="getAvgData(currentSeason)">
   <div class="season-input">
     <input type="text" id="seasonInput" placeholder="Enter Season"></input>
     <button onclick="processInput()" class="go-button">Go</button>
