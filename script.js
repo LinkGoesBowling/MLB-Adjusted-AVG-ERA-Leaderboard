@@ -20,7 +20,7 @@ let colorNonQualifiedPlayers = true;
 let league = "mlb";
 let currentSeason = new Date().getFullYear();
 let playersShown = 20;
-async function getERAData(season) {
+/*async function getERAData(season) {
         stat = "era";
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Unofficial rule: If a pitcher falls short of the IP requirement (same as amount of respective player's team's games played), 1 ER and 1 IP will be added for every inning missed.";
@@ -86,7 +86,7 @@ async function getERAData(season) {
                         createFL.style.borderBottomRightRadius = '10px';
                         leagueTabs.appendChild(createFL);
                 }
-        } */
+        }
         let changeERATab = document.getElementById("eraTab"); //makes ERA tab look selected
         changeERATab.style.backgroundColor = 'white';
         changeERATab.style.border = '2px solid black';
@@ -158,9 +158,8 @@ async function getERAData(season) {
                 }
             }
         }
-}
-async function getAvgData(season){ //uses same structure as getERAData, but with avg
-        stat = "avg";
+}*/
+async function getAvgData(season, stat){ //uses same structure as getERAData, but with avg
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
         let changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
@@ -169,55 +168,65 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
         changeAvgTab.style.border = '2px solid black';
         changeERATab.style.backgroundColor = 'gray';
         changeERATab.style.border = '1px solid black';
-        const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
+        const hittersAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
+        const pitchersAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=hitting&season=" + season + "&sportIds=1");
-        const pData = await playerAPI.json();
+        const hittersData = await hittersAPI.json();
+        const pitchersData = await pitchersAPI.json();
         const tData = await teamAPI.json();
-        const players = pData.stats[0].splits;
+        const hitters = hittersData.stats[0].splits;
         const teams = tData.stats[0].splits;
-        for (let i = 0; i < players.length; i++) {
-            for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA count
-                if (players[i].team.id === teams[j].team.id){
+        for (let i = 0; i < hitters.length; i++) {
+            for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA/inning count
+                if (hitters[i].team.id === teams[j].team.id){
                         var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
                         break;
             }
+                if (pitchers[i].team.id === teams[j].team.id){
+                        var minimumInnings = Math.round(teams[j].stat.gamesPlayed);
+                        break;
+                }
             }
-            if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
-                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
-                        let adjustedAvg = players[i].stat.avg;
-                        players[i].adjustedAvg = adjustedAvg;
-                        players[i].preAdjustmentAvg = " "; //does not add adjustment message
-                        players[i].isQualified = true;
+            if (hitters[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
+                if (league === "nl" && hitters[i].league.name === "NL" || league === "mlb" || league === "al" && hitters[i].league.name === "AL"){ //check if player is in selected league
+                        let adjustedAvg = hitters[i].stat.avg;
+                        hitters[i].adjustedAvg = adjustedAvg;
+                        hitters[i].preAdjustmentAvg = " "; //does not add adjustment message
+                        hitters[i].isQualified = true;
+                        const modifiedERTotal = pitchers[i].stat.earnedRuns + (minimumInnings - pitchers[i].stat.inningsPitched);
+                        let adjustedERA = (modifiedERTotal * 9) / minimumInnings; //modify pitchers
+                        adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
+                        adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
+                        pitchers[i].adjustedERA = adjustedERA;
+                        pitchers[i].preAdjustmentERA = pitchers[i].stat.era;
+                        pitchers[i].isQualified = false;
                 }
                 else {
-                        players[i].adjustedAvg = -1; //list non-league players last
+                        hitters[i].adjustedAvg = -1; //list non-league players last
+                        pitchers[i].adjustedERA = Infinity;
                 }
             }
-            else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
-                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
-                        let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
+            else if (hitters[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
+                if (league === "nl" && hitters[i].league.name === "NL" || league === "mlb" || league === "al" && hitters[i].league.name === "AL"){ //check if player is in selected league
+                        let adjustedAvg = hitters[i].stat.hits / ((minimumPlateAppearances - hitters[i].stat.plateAppearances) + hitters[i].stat.atBats);
                         adjustedAvg = Math.round(adjustedAvg * 1000) / 1000; //rounds to nearest thousandth
                         adjustedAvg = (adjustedAvg * 1).toFixed(3); //adds trailing 0's if needed. ex. .3 -> .300
                         adjustedAvg = "." + adjustedAvg.toString().split('.')[1]; //removes 0 from start e.g. 0.321 -> .321
-                        players[i].adjustedAvg = adjustedAvg;
-                        players[i].preAdjustmentAvg = players[i].stat.avg; //original avg
-                        players[i].isQualified = false; //marks player as non-qualified so it appears as red
+                        hitters[i].adjustedAvg = adjustedAvg;
+                        hitters[i].preAdjustmentAvg = hitters[i].stat.avg; //original avg
+                        hitters[i].isQualified = false; //marks player as non-qualified so it appears as red
                 }
                 else {
-                        players[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
+                        hitters[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
+                        pitchers[i].adjustedERA = Infinity;
                 }
             }
         }
-        for (let i = 0; i < players.length; i++){
-            players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
+        for (let i = 0; i < hitters.length; i++){
+            hitters.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < playersShown; i++) {
-                const ol1 = document.getElementById('playerRanks');
                 const columnBoxes = document.getElementById('columnBoxes');
-                if ((ol1.children.length < playersShown) && (ol1.children.length < players.length)){ //change to half of playersShown for multiple rows
-                        const createRanks = document.createElement('div'); //create new li elements and add them to the ol
-                        createRanks.classList.add('rank' + (i + (playersShown - 19))); //add class
-                        createRanks.setAttribute('id', 'rank' + (i + (playersShown - 19))); //add id
-                        ol1.appendChild(createRanks);
+                if ((columnBoxes.children.length < playersShown) && (columnBoxes.children.length < hitters.length)){ //change to half of playersShown for multiple rows
                         const rankBoxes = document.createElement('div');
                         rankBoxes.classList.add('rank-box');
                         rankBoxes.setAttribute('id', 'rankBox' + (i + (playersShown - 19)));
@@ -237,28 +246,24 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         const br = document.createElement('br');
                         columnBoxes.appendChild(br);
                 }
-                const changeRank = document.getElementById("rank" + (i + 1));
                 const changeRankBox = document.getElementById("rankBox" + (i + 1));
                 const changeNameBox = document.getElementById("nameBox" + (i + 1));
                 const changeAvgBox = document.getElementById("avgBox" + (i + 1));
                 const changePreAdjust = document.getElementById("preAdjustBox" + (i + 1));
-                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
-                        changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
+                if (league === "nl" && hitters[i].league.name === "NL" || league === "mlb" || league === "al" && hitters[i].league.name === "AL"){ //check if player is in selected league
                         changeRankBox.textContent = (i + 1);
-                        changeNameBox.textContent = players[i].player.fullName;
-                        changeAvgBox.textContent = players[i].adjustedAvg;
-                        changePreAdjust.textContent = players[i].stat.avg;
+                        changeNameBox.textContent = hitters[i].player.fullName;
+                        changeAvgBox.textContent = hitters[i].adjustedAvg;
+                        changePreAdjust.textContent = hitters[i].stat.avg;
                 }
-                if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
-                        changeRank.style.color = "red"; //changes non-qualified players to red
+                if (hitters[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRankBox.style.color = "red";
                         changeNameBox.style.color = "red";
                         changeAvgBox.style.color = "red";
                         changePreAdjust.style.color = "red";
                 }
-                if (players[i].isQualified === true || colorNonQualifiedPlayers === false){
-                        changeRank.style.color = "black"; //change qualified spots to black and change all spots to black when box is unchecked
-                        changeRankBox.style.color = "black";
+                if (hitters[i].isQualified === true || colorNonQualifiedPlayers === false){
+                        changeRankBox.style.color = "black"; //change qualified players to black and change all players to black when box is unchecked
                         changeNameBox.style.color = "black";
                         changeAvgBox.style.color = "black";
                         changePreAdjust.style.color = "black";
