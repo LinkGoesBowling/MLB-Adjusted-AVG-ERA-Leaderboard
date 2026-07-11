@@ -186,7 +186,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                         let adjustedAvg = players[i].stat.avg;
                         players[i].adjustedAvg = adjustedAvg;
-                        players[i].preAdjustmentAvg = " "; //does not add adjustment message
+                        players[i].preAdjustmentAvg = ".000"; //does not add adjustment message
                         players[i].isQualified = true;
                 }
                 else {
