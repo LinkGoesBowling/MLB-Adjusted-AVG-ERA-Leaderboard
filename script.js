@@ -133,6 +133,7 @@ async function getERAData(season) {
                 }
             }
         }
+        for (let i = 0; i < players.length; i++){
             players.sort((a, b) => a.adjustedERA - b.adjustedERA);
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
@@ -157,9 +158,9 @@ async function getERAData(season) {
                 }
             }
         }
+}
 async function getAvgData(season){ //uses same structure as getERAData, but with avg
         stat = "avg";
-        createColumnBoxes();
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
         let changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
@@ -185,7 +186,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                         let adjustedAvg = players[i].stat.avg;
                         players[i].adjustedAvg = adjustedAvg;
-                        players[i].preAdjustmentAvg = ".000"; //does not add adjustment message
+                        players[i].preAdjustmentAvg = " "; //does not add adjustment message
                         players[i].isQualified = true;
                 }
                 else {
@@ -199,7 +200,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         adjustedAvg = (adjustedAvg * 1).toFixed(3); //adds trailing 0's if needed. ex. .3 -> .300
                         adjustedAvg = "." + adjustedAvg.toString().split('.')[1]; //removes 0 from start e.g. 0.321 -> .321
                         players[i].adjustedAvg = adjustedAvg;
-                        players[i].preAdjustmentAvg = players[i].stat.avg; //add adjustment message
+                        players[i].preAdjustmentAvg = ", adjusted from: " + players[i].stat.avg; //add adjustment message
                         players[i].isQualified = false; //marks player as non-qualified so it appears as red
                 }
                 else {
@@ -207,38 +208,41 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 }
             }
         }
+        for (let i = 0; i < players.length; i++){
             players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             for (let i = 0; i < playersShown; i++) {
+                const ol1 = document.getElementById('playerRanks');
+                if ((ol1.children.length < playersShown) && (ol1.children.length < players.length)){ //change to half of playersShown for multiple rows
+                        const createRanks = document.createElement('div'); //create new li elements and add them to the ol
+                        createRanks.classList.add('rank' + (i + 1 + (playersShown - 20))); //add class
+                        createRanks.setAttribute('id', 'rank' + (i + 1 + (playersShown - 20))); //add id
+                        ol1.appendChild(createRanks);
+                        if (rank === 1){ //test for editing columns
+                                const rankBox = document.getElementById("rankBox");
+                                rankBox.textContent = 1;
+                                const nameBox = document.getElementById("nameBox");
+                                nameBox.textContent = players[i].player.fullName;
+                                const avgBox = document.getElementById("avgBox");
+                                avgBox.textContent = players[i].stat.avg;
+                                const preAdjust = document.getElementById("preAdjust");
+                                preAdjust.textContent = players[i].preAdjustmentAvg;
+                        }
+                }
+                const changeRank = document.getElementById("rank" + (i + 1));
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
-                        var changeRank = document.getElementById("rankBox" + (i + 1));
-                        var changeName = document.getElementById("nameBox" + (i + 1));
-                        var changeAvg = document.getElementById("avgBox" + (i + 1));
-                        var changePreAdjust = document.getElementById("preAdjust" + (i + 1));
-                        changeRank.textContent = (i + 1); //edit boxes
-                        changeName.textContent = players[i].player.fullName;
-                        changeAvg.textContent = players[i].stat.avg;
-                        //changePreAdjust.textContent = players[i].preAdjustmentAvg;
+                        changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                 }
                 if (players[i].isQualified === false && colorNonQualifiedPlayers === true){
-                        changeRank.style.color = "red";
-                        changeName.style.color = "red"; //changes non-qualified players to red
-                        changeAvg.style.color = "red";
-                        //changePreAdjust.style.color = "red";
-                        
+                        changeRank.style.color = "red"; //changes non-qualified players to red
                 }
                 if (players[i].isQualified === true){
-                        changeRank.style.color = "black";
-                        changeName.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
-                        changeAvg.style.color = "black";
-                        //changePreAdjust.style.color = "black";
+                        changeRank.style.color = "black"; //when changing from ERA to avg, reset qualified players to black
                 }
                 if (colorNonQualifiedPlayers === false){
-                        changeRank.style.color = "black";
-                        changeName.style.color = "black"; //resets all players to black
-                        changeAvg.style.color = "black";
-                        //changePreAdjust.style.color = "black";
+                        changeRank.style.color = "black"; //resets all players to black
                 }
             }
+        }
 }
 function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === true){
@@ -354,30 +358,5 @@ function showMorePlayers(){
         }
         if (stat === "era"){
                 getERAData(currentSeason);
-        }
-}
-function createColumnBoxes(){
-        const columnBoxes = document.getElementById('columnBoxes');
-        for (let i = 0; i < playersShown; i++){
-                if (columnBoxes.children.length < playersShown){
-                        const createRank = document.createElement('div');
-                        createRank.classList.add('rank-box');
-                        createRank.setAttribute('id', 'rankBox' + (i + (playersShown - 19)));
-                        columnBoxes.appendChild(createRank);
-                        const createNameRank = document.createElement('div');
-                        createNameRank.classList.add('name-box');
-                        createNameRank.setAttribute('id', 'nameBox' + (i + (playersShown - 19))); //add id
-                        columnBoxes.appendChild(createNameRank);
-                        const createAvgRank = document.createElement('div');
-                        createAvgRank.classList.add('avg-box');
-                        createAvgRank.setAttribute('id', 'avgBox' + (i + (playersShown - 19)));
-                        columnBoxes.appendChild(createAvgRank);
-                        const createPreAdjustRank = document.createElement('div');
-                        createPreAdjustRank.classList.add('pre-adjusted-avg-box');
-                        createPreAdjustRank.setAttribute('id', 'preAdjustBox' + (i + (playersShown - 19)));
-                        columnBoxes.appendChild(createPreAdjustRank);
-                        const createBr = document.createElement('br');
-                        columnBoxes.appendChild(createBr);
-                }
         }
 }
