@@ -237,7 +237,7 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 const changeAvg = document.getElementById("avgBox" + (i + 1));
                 const changePreAdjust = document.getElementById("preAdjust" + (i + 1));
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
-                        changeRank.textContent = (i + 1); //edit boxes
+                        //changeRank.textContent = (i + 1); //edit boxes
                         changeName.textContent = players[i].player.fullName;
                         changeAvg.textContent = players[i].stat.avg;
                         //changePreAdjust.textContent = players[i].preAdjustmentAvg;
