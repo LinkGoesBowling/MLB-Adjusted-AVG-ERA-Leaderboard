@@ -206,10 +206,8 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                 }
             }
         }
-        for (let i = 0; i < players.length; i++){
-            players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
-            for (let i = 0; i < playersShown; i++) {
-                const columnBoxes = document.getElementById('columnBoxes');
+        const columnBoxes = document.getElementById('columnBoxes');
+        for (let i = 0; i < playersShown; i++){
                 if ((columnBoxes.children.length < playersShown) && (columnBoxes.children.length < players.length)){
                         const createRank = document.createElement('div');
                         createRank.classList.add('rank-box');
@@ -230,6 +228,9 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         const createBr = document.createElement('br');
                         columnBoxes.appendChild(createBr);
                 }
+        }
+            players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
+            for (let i = 0; i < playersShown; i++) {
                 if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
                         var changeRank = document.getElementById("rankBox" + (i + 1));
                         var changeName = document.getElementById("nameBox" + (i + 1));
@@ -260,7 +261,6 @@ async function getAvgData(season){ //uses same structure as getERAData, but with
                         //changePreAdjust.style.color = "black";
                 }
             }
-        }
 }
 function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === true){
