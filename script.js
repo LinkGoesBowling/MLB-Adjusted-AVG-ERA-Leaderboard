@@ -252,7 +252,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 if (stat === "avg"){
                     players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
                 }
-                else {
+                if (stat === "era"){
                         pitchers.sort((a, b) => b.adjustedERA - a.adjustedERA);
                 }
             for (let i = 0; i < playersShown; i++) {
@@ -298,8 +298,8 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         changeRank.textContent = pitchers[i].player.fullName + ", ERA: " + pitchers[i].adjustedAvg + pitchers[i].preAdjustmentERA;
                         changeRankBox.textContent = (i + 1);
                         changeNameBox.textContent = pitchers[i].player.fullName;
-                        changeAvgBox.textContent = players[i].adjustedERA;
-                        changePreAdjust.textContent = players[i].stat.era;
+                        changeAvgBox.textContent = pitchers[i].adjustedERA;
+                        changePreAdjust.textContent = pitchers[i].stat.era;
                 }
                 if (current[i].isQualified === false && colorNonQualifiedPlayers === true){
                         changeRank.style.color = "red"; //changes non-qualified players to red
