@@ -8,14 +8,14 @@
   <link rel="shortcut icon" type="image/x-icon" href="https://linkgoesbowling.github.io/MLB-Gwynn-Rule-Leaderboard/favicon.ico">
 </head>
 <!--new Date().getFullYear()-->
-<body onload="getData(currentSeason, "avg")">
+<body onload="getData(currentSeason, 'avg')">
   <div class="season-input">
     <input type="text" id="seasonInput" placeholder="Enter Season"></input>
     <button onclick="processInput()" class="go-button">Go</button>
   </div>
   <div class="avg-era-tabs">
-    <button class="avg-tab" id="avgTab" onclick="getData(currentSeason, "avg")">AVG</button>
-    <button class="era-tab" id="eraTab" onclick="getData(currentSeason, "era")">ERA</button>
+    <button class="avg-tab" id="avgTab" onclick="getData(currentSeason, 'avg')">AVG</button>
+    <button class="era-tab" id="eraTab" onclick="getData(currentSeason, 'era')">ERA</button>
   </div>
   <div class="league-tabs">
     <button class="mlb-tab" id="mlbTab" onclick="switchToMLB()">MLB</button>
