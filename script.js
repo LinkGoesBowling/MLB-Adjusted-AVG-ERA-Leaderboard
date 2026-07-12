@@ -249,7 +249,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 current = pitchers;
         }
         for (let i = 0; i < current.length; i++){
-                if (stat === "avg"{
+                if (stat === "avg"){
                     players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
                 }
                 else {
