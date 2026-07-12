@@ -156,14 +156,14 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 const changeNameBox = document.getElementById("nameBox" + (i + 1));
                 const changeAvgBox = document.getElementById("avgBox" + (i + 1));
                 const changePreAdjust = document.getElementById("preAdjustBox" + (i + 1));
-                if ((league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL") && (stat === "avg")){ //check if player is in selected league
+                if (stat === "avg" && (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL")){ //check if player is in selected league
                         changeRank.textContent = players[i].player.fullName + ", AVG: " + players[i].adjustedAvg + players[i].preAdjustmentAvg;
                         changeRankBox.textContent = (i + 1);
                         changeNameBox.textContent = players[i].player.fullName;
                         changeAvgBox.textContent = players[i].adjustedAvg;
                         changePreAdjust.textContent = players[i].stat.avg;
                 }
-                if ((league === "nl" && pitchers[i].league.name === "NL" || league === "mlb" || league === "al" && pitchers[i].league.name === "AL") && (stat === "era")){ //check if player is in selected league
+                if (stat === "era" && (league === "nl" && pitchers[i].league.name === "NL" || league === "mlb" || league === "al" && pitchers[i].league.name === "AL")){ //check if player is in selected league
                         changeRank.textContent = pitchers[i].player.fullName + ", ERA: " + pitchers[i].adjustedAvg + pitchers[i].preAdjustmentERA;
                         changeRankBox.textContent = (i + 1);
                         changeNameBox.textContent = pitchers[i].player.fullName;
