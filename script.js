@@ -25,13 +25,8 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
         const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=hitting&season=" + season + "&sportIds=1");
         const pitcherAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
-        const pData = await playerAPI.json();
-        const tData = await teamAPI.json();
-        const pitcherData = await pitcherAPI.json();
-        const players = pData.stats[0].splits;
-        const teams = tData.stats[0].splits;
-        const pitchers = pitcherData.stats[0].splits;
         if (stat === "avg"){
+                const pData = await playerAPI.json();
                 let changeAvgTab = document.getElementById("avgTab");
                 changeAvgTab.style.backgroundColor = 'white';
                 changeAvgTab.style.border = '2px solid black';
@@ -40,8 +35,11 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 changeERATab.style.border = '1px solid black';
                 current = players;
                 currentStat = "avg";
+                var players = pData.stats[0].splits;
         }
+        const tData = await teamAPI.json();
         if (stat === "era"){
+                const pitcherData = await pitcherAPI.json();
                 let changeAvgTab = document.getElementById("avgTab");
                 changeAvgTab.style.backgroundColor = 'gray';
                 changeAvgTab.style.border = '1px solid black';
@@ -50,7 +48,9 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 changeERATab.style.border = '2px solid black';
                 current = pitchers;
                 currentStat = "era";
+                var pitchers = pitcherData.stats[0].splits;
         }
+        const teams = tData.stats[0].splits;
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA/inning count
                 if (players[i].team.id === teams[j].team.id){
@@ -62,17 +62,21 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                             break;
                     }
             }
-            if ((stat === "avg" && players[i].stat.plateAppearances >= minimumPlateAppearances) || (stat === "era" && pitchers[i].stat.inningsPitched >= minimumInnings)){ //do not adjust qualified players
+            if (stat === "avg" && players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
                 if (league === "nl" && current[i].league.name === "NL" || league === "mlb" || league === "al" && current[i].league.name === "AL"){ //check if player is in selected league
                         players[i].adjustedAvg = players[i].stat.avg;
                         players[i].preAdjustmentAvg = " "; //does not add adjustment message
                         players[i].isQualified = true;
+                }
+                else {
+                        players[i].adjustedAvg = -1; //list non-league players last or never
+                }
+                if (stat === "era" && pitchers[i].stat.inningsPitched >= minimumInnings){
                         pitchers[i].adjustedERA = pitchers[i].stat.era;
                         pitchers[i].preAdjustmentERA = " ";
                         pitchers[i].isQualified = true;
                 }
-                else {
-                        players[i].adjustedAvg = -1; //list non-league players last or never
+                else{
                         pitchers[i].adjustedERA = Infinity;
                 }
             }
@@ -86,7 +90,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         players[i].preAdjustmentAvg = players[i].stat.avg; //original avg
                         players[i].isQualified = false; //marks player as non-qualified so it appears as red
                         const modifiedERTotal = pitchers[i].stat.earnedRuns + (minimumInnings - pitchers[i].stat.inningsPitched);
-                        console.log(pitchers[i].fullName + modifiedERTotal);
                         let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
                         adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
                         adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
@@ -110,9 +113,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                     players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
                 }
                 if (stat === "era"){
-                        if (pitchers[i].adjustedERA !== NaN){
-                                pitchers.sort((a, b) => a.adjustedERA - b.adjustedERA);
-                        }
+                        pitchers.sort((a, b) => a.adjustedERA - b.adjustedERA);
                 }
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
