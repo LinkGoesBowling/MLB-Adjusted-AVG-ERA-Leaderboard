@@ -51,13 +51,13 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 var pitchers = pitcherData.stats[0].splits;
         }
         const teams = tData.stats[0].splits;
-        for (let i = 0; i < players.length; i++) {
+        for (let i = 0; i < current.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA/inning count
-                if (players[i].team.id === teams[j].team.id){
+                if (players[i].team.id === teams[j].team.id && stat === "avg"){
                         var minimumPlateAppearances = Math.round((teams[j].stat.gamesPlayed) * 3.1);
                         break;
                     }
-                    if (pitchers[i].team.id === teams[j].team.id){
+                    if (pitchers[i].team.id === teams[j].team.id && stat === "era"){
                             var minimumInnings = teams[j].stat.gamesPlayed;
                             break;
                     }
@@ -93,7 +93,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 else {
                         players[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
                 }
-                if ((pitchers[i].stat.inningsPitched < minimumInnings) && stat === "era"){
+                if (stat === "era" && (pitchers[i].stat.inningsPitched < minimumInnings)){
                         const modifiedERTotal = pitchers[i].stat.earnedRuns + (minimumInnings - pitchers[i].stat.inningsPitched);
                         let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
                         adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
