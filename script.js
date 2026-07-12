@@ -109,7 +109,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         pitchers[i].adjustedERA = pitchers[i].stat.era;
                         pitchers[i].preAdjustmentERA = " ";
                         pitchers[i].isQualified = true;
-                } //bracket error is here if there is one
+                }
             }
                 }
             }
@@ -182,7 +182,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         changePreAdjust.style.color = "black";
                 }
             }
-        }
 }
 function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === true){
