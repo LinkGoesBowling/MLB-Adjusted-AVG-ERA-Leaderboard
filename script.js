@@ -62,7 +62,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                             var minimumInnings = teams[j].stat.gamesPlayed;
                             break;
                     }
-            }
             if (players[i].stat.plateAppearances >= minimumPlateAppearances){ //do not adjust qualified players
                 if (league === "nl" && current[i].league.name === "NL" || league === "mlb" || league === "al" && current[i].league.name === "AL"){ //check if player is in selected league
                         players[i].adjustedAvg = players[i].stat.avg;
@@ -87,6 +86,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                                 players[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
                         }
             }
+                }
                 if (stat === "era"){
                 if (pitchers[i].stat.inningsPitched < minimumInnings){
                         const modifiedERTotal = pitchers[i].stat.earnedRuns + (minimumInnings - pitchers[i].stat.inningsPitched);
