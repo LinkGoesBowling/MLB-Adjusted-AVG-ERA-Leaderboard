@@ -94,20 +94,13 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                                 let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
                                 adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
                                 adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
-                                if (adjustedERA !== NaN){
-                                        pitchers[i].adjustedERA = adjustedERA;
-                                }
-                                if (adjustedERA === NaN){
-                                        pitchers[i].adjustedERA = Infinity;
-                                        console.log(pitchers[i].player.fullName + "'s ERA was set to Infinity because adjustedERA was NaN");
-                                }
+                                pitchers[i].adjustedERA = adjustedERA;
                                 pitchers[i].preAdjustmentERA = players[i].stat.era;
                                 pitchers[i].isQualified = false;
                                 }
                 }
                         else {
                                 pitchers[i].adjustedERA = Infinity;
-                                console.log(pitchers[i].player.fullName + "'s ERA was set to Infinity because player was not in selected league");
                         }
                 if (pitchers[i].stat.inningsPitched >= minimumInnings){
                         pitchers[i].adjustedERA = pitchers[i].stat.era;
@@ -130,7 +123,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 if ((ol1.children.length < playersShown) && (ol1.children.length < current.length)){ //change to half of playersShown for multiple rows
                         const createRanks = document.createElement('div'); //ol1 is still here because otherwise script only lists 4 players
                         createRanks.style.fontSize = 0; //hide ol1
-                        createRanks.setAttribute('id', 'rank' + (i + (playersShown - 19))); //add id
                         ol1.appendChild(createRanks);
                         const rankBoxes = document.createElement('div');
                         rankBoxes.classList.add('rank-box');
