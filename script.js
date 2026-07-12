@@ -86,7 +86,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         else {
                                 players[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
                         }
-                }
             }
                 if (stat === "era"){
                 if (pitchers[i].stat.inningsPitched < minimumInnings){
