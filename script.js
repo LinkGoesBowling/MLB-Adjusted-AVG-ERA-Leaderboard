@@ -162,29 +162,7 @@ const currentStat = "avg";
 }*/
 async function getData(season, stat){ //uses same structure as getERAData, but with avg
         const ruleDescription = document.getElementById("ruleDescription");
-        if (stat === "avg"){
-                current = players;
-        }
-        if (stat === "era"){
-                current = pitchers;
-        }
         ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
-        if (stat === "avg"){
-                let changeAvgTab = document.getElementById("avgTab");
-                changeAvgTab.style.backgroundColor = 'white';
-                changeAvgTab.style.border = '2px solid black';
-                let changeERATab = document.getElementById("eraTab");
-                changeERATab.style.backgroundColor = 'gray';
-                changeERATab.style.border = '1px solid black';
-        }
-        if (stat === "era"){
-                let changeAvgTab = document.getElementById("avgTab");
-                changeAvgTab.style.backgroundColor = 'gray';
-                changeAvgTab.style.border = '1px solid black';
-                let changeERATab = document.getElementById("eraTab");
-                changeERATab.style.backgroundColor = 'white';
-                changeERATab.style.border = '2px solid black';
-        }
         const playerAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=hitting&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
         const teamAPI = await fetch ("https://statsapi.mlb.com/api/v1/teams/stats?stats=season&group=hitting&season=" + season + "&sportIds=1");
         const pitcherAPI = await fetch("https://statsapi.mlb.com/api/v1/stats?stats=season&group=pitching&playerPool=ALL&sportIds=1&season=" + season + "&limit=5000");
@@ -194,6 +172,24 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
         const players = pData.stats[0].splits;
         const teams = tData.stats[0].splits;
         const pitchers = pitcherData.stats[0].splits;
+        if (stat === "avg"){
+                let changeAvgTab = document.getElementById("avgTab");
+                changeAvgTab.style.backgroundColor = 'white';
+                changeAvgTab.style.border = '2px solid black';
+                let changeERATab = document.getElementById("eraTab");
+                changeERATab.style.backgroundColor = 'gray';
+                changeERATab.style.border = '1px solid black';
+                current = players;
+        }
+        if (stat === "era"){
+                let changeAvgTab = document.getElementById("avgTab");
+                changeAvgTab.style.backgroundColor = 'gray';
+                changeAvgTab.style.border = '1px solid black';
+                let changeERATab = document.getElementById("eraTab");
+                changeERATab.style.backgroundColor = 'white';
+                changeERATab.style.border = '2px solid black';
+                current = pitchers;
+        }
         for (let i = 0; i < players.length; i++) {
             for (let j = 0; j <  30; j++){ //find player's team's games played for accurate minimum PA/inning count
                 if (players[i].team.id === teams[j].team.id){
