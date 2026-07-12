@@ -12,7 +12,7 @@
   <figcaption>ERA Ranks, 2026 season, both leagues as of Jul 9, 2026</figcaption>
 </figure>
 <h3>⏳ Status</h3>
-<p>The script gets batting average data correctly, but I am working on ERA as I am migrating it into its own function. Pitchers shown are currently listed by actual ERA instead of adjusted and non-qualifiers are shown.</p>
+<p>Batting average data for both leagues is ranked accurately, except that it lists a non-qualified player with a 1.000 average first. Everything else is broken.</p>
 <h3>📖 About</h2>
 <p>This is a solo project that I created to learn about APIs. It uses HTML, CSS, and JavaScript.</p>
 <p>The website adjusts non-qualified hitters to be with other players by adding hitless at-bats. A famous example of a player that fell short and won was Tony Gwynn in 1996. His original batting average was .353 but then it was adjusted to .349 since he fell short, and then he still won the batting title. I also programmed a rule for pitchers, although it is not based on an official rule that if a player falls short, 1 ER and 1 IP will be added for every missed inning.</p>
