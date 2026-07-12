@@ -162,6 +162,12 @@ const currentStat = "avg";
 }*/
 async function getData(season, stat){ //uses same structure as getERAData, but with avg
         const ruleDescription = document.getElementById("ruleDescription");
+        if (stat === "avg"){
+                current = players;
+        }
+        if (stat === "era"){
+                current = pitchers;
+        }
         ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
         if (stat === "avg"){
                 let changeAvgTab = document.getElementById("avgTab");
@@ -199,8 +205,8 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                             break;
                     }
             }
-            if ((players[i].stat.plateAppearances >= minimumPlateAppearances) || (pitchers[i].stat.inningsPitched >= minimumInnings)){ //do not adjust qualified players
-                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
+            if ((stat === "avg" && players[i].stat.plateAppearances >= minimumPlateAppearances) || (stat === "era" && pitchers[i].stat.inningsPitched >= minimumInnings)){ //do not adjust qualified players
+                if (league === "nl" && current[i].league.name === "NL" || league === "mlb" || league === "al" && current[i].league.name === "AL"){ //check if player is in selected league
                         players[i].adjustedAvg = players[i].stat.avg;
                         players[i].preAdjustmentAvg = " "; //does not add adjustment message
                         players[i].isQualified = true;
@@ -214,7 +220,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 }
             }
             else if ((players[i].stat.plateAppearances < minimumPlateAppearances) || (pitchers[i].stat.inningsPitched < minimumInnings)){ //adjustment for non-qualified players
-                if (league === "nl" && players[i].league.name === "NL" || league === "mlb" || league === "al" && players[i].league.name === "AL"){ //check if player is in selected league
+                if (league === "nl" && current[i].league.name === "NL" || league === "mlb" || league === "al" && current[i].league.name === "AL"){ //check if player is in selected league
                         let adjustedAvg = players[i].stat.hits / ((minimumPlateAppearances - players[i].stat.plateAppearances) + players[i].stat.atBats);
                         adjustedAvg = Math.round(adjustedAvg * 1000) / 1000; //rounds to nearest thousandth
                         adjustedAvg = (adjustedAvg * 1).toFixed(3); //adds trailing 0's if needed. ex. .3 -> .300
@@ -235,12 +241,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         pitchers[i].adjustedERA = Infinity;
                 }
             }
-        }
-        if (stat === "avg"){
-                current = players;
-        }
-        if (stat === "era"){
-                current = pitchers;
         }
         for (let i = 0; i < current.length; i++){
                 if (stat === "avg"){
