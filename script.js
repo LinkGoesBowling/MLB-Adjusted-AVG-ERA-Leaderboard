@@ -226,7 +226,12 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
                         adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
                         adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
-                        pitchers[i].adjustedERA = adjustedERA;
+                        if (adjustedERA !== NaN){
+                                pitchers[i].adjustedERA = adjustedERA;
+                        }
+                        else{
+                                pitchers[i].adjustedERA = Infinity;
+                        }
                         console.log(pitchers[i].player.fullName + " " + pitchers[i].adjustedERA);
                         pitchers[i].preAdjustmentERA = players[i].stat.era;
                         pitchers[i].isQualified = false;
@@ -244,7 +249,12 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 current = pitchers;
         }
         for (let i = 0; i < current.length; i++){
-            current.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
+                if (stat === "avg"{
+                    players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
+                }
+                else {
+                        pitchers.sort((a, b) => b.adjustedERA - a.adjustedERA);
+                }
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
                 const columnBoxes = document.getElementById('columnBoxes');
