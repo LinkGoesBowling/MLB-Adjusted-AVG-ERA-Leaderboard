@@ -82,6 +82,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                                 players[i].adjustedAvg = adjustedAvg;
                                 players[i].preAdjustmentAvg = players[i].stat.avg; //original avg
                                 players[i].isQualified = false; //marks player as non-qualified so it appears as red
+                        }
                         else {
                                 players[i].adjustedAvg = -1; //set non-league players to -1 so they either appear as last or never appear at all
                         }
