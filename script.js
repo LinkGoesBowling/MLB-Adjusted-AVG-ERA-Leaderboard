@@ -227,7 +227,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
                         adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
                         pitchers[i].adjustedERA = adjustedERA;
-                        console.log(pitchers[i].fullName + " " + pitchers[i].adjustedERA);
+                        console.log(pitchers[i].player.fullName + " " + pitchers[i].adjustedERA);
                         pitchers[i].preAdjustmentERA = players[i].stat.era;
                         pitchers[i].isQualified = false;
                 }
