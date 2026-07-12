@@ -196,7 +196,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                     }
                     if (pitchers[i].team.id === teams[j].team.id){
                             var minimumInnings = teams[j].stat.gamesPlayed;
-                            console.log(minimumInnings);
                             break;
                     }
             }
@@ -227,12 +226,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         let adjustedERA = (modifiedERTotal * 9) / minimumInnings;
                         adjustedERA = Math.round(adjustedERA * 100) / 100; //rounds to nearest hundredth
                         adjustedERA = (adjustedERA * 1).toFixed(2); //converts to accurate formatting e.g. 3 -> 3.00
-                        if (adjustedERA !== NaN){
-                                pitchers[i].adjustedERA = adjustedERA;
-                        }
-                        else{
-                                pitchers[i].adjustedERA = Infinity;
-                        }
+                        pitchers[i].adjustedERA = adjustedERA;
                         pitchers[i].preAdjustmentERA = players[i].stat.era;
                         pitchers[i].isQualified = false;
                 }
