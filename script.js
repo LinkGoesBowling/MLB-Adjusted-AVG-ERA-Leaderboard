@@ -164,16 +164,18 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
         if (stat === "avg"){
-                var changeAvgTab = document.getElementById("avgTab"); //makes ERA tab not selected
+                let changeAvgTab = document.getElementById("avgTab");
                 changeAvgTab.style.backgroundColor = 'white';
                 changeAvgTab.style.border = '2px solid black';
-                var changeERATab = document.getElementById("eraTab"); //makes avg tab look selected
+                let changeERATab = document.getElementById("eraTab");
                 changeERATab.style.backgroundColor = 'gray';
                 changeERATab.style.border = '1px solid black';
         }
         if (stat === "era"){
+                let changeAvgTab = document.getElementById("avgTab");
                 changeAvgTab.style.backgroundColor = 'gray';
                 changeAvgTab.style.border = '1px solid black';
+                let changeERATab = document.getElementById("eraTab");
                 changeERATab.style.backgroundColor = 'white';
                 changeERATab.style.border = '2px solid black';
         }
