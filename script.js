@@ -196,6 +196,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                     }
                     if (pitchers[i].team.id === teams[j].team.id){
                             var minimumInnings = teams[j].stat.gamesPlayed;
+                            console.log(minimumInnings);
                             break;
                     }
             }
@@ -232,7 +233,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         else{
                                 pitchers[i].adjustedERA = Infinity;
                         }
-                        console.log(pitchers[i].player.fullName + " " + pitchers[i].adjustedERA);
                         pitchers[i].preAdjustmentERA = players[i].stat.era;
                         pitchers[i].isQualified = false;
                 }
