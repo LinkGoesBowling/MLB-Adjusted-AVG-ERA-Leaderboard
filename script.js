@@ -20,7 +20,7 @@ let colorNonQualifiedPlayers = true;
 let league = "mlb";
 let currentSeason = new Date().getFullYear();
 let playersShown = 20;
-const currentStat = "avg";
+let currentStat = "avg";
 async function getData(season, stat){ //uses same structure as getERAData, but with avg
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
