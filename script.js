@@ -71,14 +71,6 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                 else {
                         players[i].adjustedAvg = -1; //list non-league players last or never
                 }
-                if (stat === "era" && pitchers[i].stat.inningsPitched >= minimumInnings){
-                        pitchers[i].adjustedERA = pitchers[i].stat.era;
-                        pitchers[i].preAdjustmentERA = " ";
-                        pitchers[i].isQualified = true;
-                }
-                else{
-                        pitchers[i].adjustedERA = Infinity;
-                }
             }
             else if (players[i].stat.plateAppearances < minimumPlateAppearances){ //adjustment for non-qualified players
                 if (stat === "avg"){
@@ -113,6 +105,12 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                         else {
                                 pitchers[i].adjustedERA = Infinity;
                         }
+                if (pitchers[i].stat.inningsPitched >= minimumInnings){
+                        pitchers[i].adjustedERA = pitchers[i].stat.era;
+                        pitchers[i].preAdjustmentERA = " ";
+                        pitchers[i].isQualified = true;
+                } //bracket error is here if there is one
+            }
                 }
             }
         }
