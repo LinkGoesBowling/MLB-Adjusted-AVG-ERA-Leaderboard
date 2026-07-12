@@ -253,7 +253,7 @@ async function getData(season, stat){ //uses same structure as getERAData, but w
                     players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
                 }
                 if (stat === "era"){
-                        pitchers.sort((a, b) => b.adjustedERA - a.adjustedERA);
+                        pitchers.sort((a, b) => a.adjustedERA - b.adjustedERA);
                 }
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
