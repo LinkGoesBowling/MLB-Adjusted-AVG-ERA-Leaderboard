@@ -159,7 +159,7 @@ async function getERAData(season) {
             }
         }
 }
-async function getAvgData(season){ //uses same structure as getERAData, but with avg
+async function getData(season, currentStat){ //uses same structure as getERAData, but with avg
         stat = "avg";
         const ruleDescription = document.getElementById("ruleDescription");
         ruleDescription.textContent = "Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title."
