@@ -11,8 +11,6 @@
   <img width="785" height="855" alt="image" src="https://github.com/user-attachments/assets/d9fff58e-a4ab-4973-be61-7fe84dd43934" />
   <figcaption>ERA Ranks, 2026 season, both leagues as of Jul 9, 2026</figcaption>
 </figure>
-<h3>⏳ Status</h3>
-<p>Batting average data for both leagues is ranked accurately, except that it lists a non-qualified player with a 1.000 average first. Everything else is broken.</p>
 <h3>📖 About</h2>
 <p>This is a solo project that I created to learn about APIs. It uses HTML, CSS, and JavaScript.</p>
 <p>The website adjusts non-qualified hitters to be with other players by adding hitless at-bats. A famous example of a player that fell short and won was Tony Gwynn in 1996. His original batting average was .353 but then it was adjusted to .349 since he fell short, and then he still won the batting title. I also programmed a rule for pitchers, although it is not based on an official rule that if a player falls short, 1 ER and 1 IP will be added for every missed inning.</p>
