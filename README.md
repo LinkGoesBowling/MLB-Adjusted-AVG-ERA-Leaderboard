@@ -8,7 +8,7 @@
   <figcaption>AVG Ranks, 1996 season, NL</figcaption>
 </figure>
 <figure>
-  <img width="759" height="823" alt="image" src="https://github.com/user-attachments/assets/fff676e7-629d-4393-986e-b7d838ff98b7" />
+  <img width="783" height="825" alt="image" src="https://github.com/user-attachments/assets/c9c017c5-945b-4455-975a-44c372ff4c22" />
   <figcaption>ERA Ranks, 2026 season, both leagues as of Jul 12, 2026</figcaption>
 </figure>
 <h3>📖 About</h2>
