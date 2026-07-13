@@ -258,7 +258,7 @@ async function getData(season, currentStat){
                     players.sort((a, b) => b.adjustedAvg - a.adjustedAvg);
             }
             if (currentStat === "era"){
-                    players.sort((a, b) => a.adjustedAvg - b.adjustedAvg);
+                    players.sort((a, b) => a.adjustedERA - b.adjustedERA);
             }
             for (let i = 0; i < playersShown; i++) {
                 const ol1 = document.getElementById('playerRanks');
