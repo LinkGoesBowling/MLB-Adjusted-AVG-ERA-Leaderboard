@@ -25,10 +25,10 @@
   <input type="checkbox" onchange="changeQualifiedPlayerRule()" checked class="qp-checkbox">Color non-qualified players in red</input>
   <p class="rule-description" id="ruleDescription">Tony Gwynn Rule (10.22(a)): If a player falls short of the minimum amount of plate appearances (3.1 per game his team has played), a new average will be calculated by adding theoretical hitless at-bats until he reaches the minimum plate appearance count. If that player is still leading his league in average, he will win the batting title.</p>
   <div class="column-tabs">
-    <div class="rank-column">RANK</div>
-    <div class="name-column">NAME</div>
-    <div class="avg-column">AVG</div>
-    <div class="pre-adjusted-avg-column">ORIG. AVG</div>
+    <div class="rank-column" id="rankColumn">RANK</div>
+    <div class="name-column" id="nameColumn">NAME</div>
+    <div class="avg-column" id="avgColumn">AVG</div>
+    <div class="pre-adjusted-avg-column" id="preAdjustColumn">ORIG. AVG</div>
   </div>
   <div class="column-boxes" id="columnBoxes">
     <!-- Script inserts columns here -->
@@ -36,7 +36,7 @@
   <button class="show-more-players" id="showMorePlayersButton" onclick="showMorePlayers()">Show 20 more players</button>
   <p class="legal-notice">This project is an independent fan-made application and is not affiliated with, endorsed by, or sponsored by Major League Baseball. MLB and all related trademarks are the property of their respective owners.</p>
 </body>
-  <div class="ols" id="ols"> <!--This is still here because otherwise it only loops through 4 players-->
+  <div class="ols" id="ols"> <!--This is still here because otherwise the script only loops through 4 players-->
     <ol class="player-ranks" id="playerRanks">
     </ol>
     <ol class="ol2" id="playerRanks2" start="11">
