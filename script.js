@@ -270,7 +270,7 @@ function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === true){
                 colorNonQualifiedPlayers = false;
                 if (stat === "avg"){
-                        getAvgData(currentSeason); //retriggers getAvgData with year user inputted
+                        getData(currentSeason, "avg"); //retriggers getAvgData with year user inputted
                 }
                 if (stat === "era"){
                         getERAData(currentSeason);
@@ -280,7 +280,7 @@ function changeQualifiedPlayerRule(){
         if (colorNonQualifiedPlayers === false){
                 colorNonQualifiedPlayers = true;
                 if (stat === "avg"){
-                        getAvgData(currentSeason); //retriggers getAvgData with current year or most recently entered season
+                        getData(currentSeason, "avg") //retriggers getAvgData with current year or most recently entered season
                 }
                 if (stat === "era"){
                         getERAData(currentSeason);
@@ -300,7 +300,7 @@ function switchToMLB(){
         alTab.style.backgroundColor = 'gray';
         alTab.style.border = '1px solid black';
         if (stat === "avg"){
-                getAvgData(currentSeason);
+                getData(currentSeason, "avg")
         }
         if (stat === "era"){
                 getERAData(currentSeason);
@@ -318,7 +318,7 @@ function switchToNL(){
         alTab.style.backgroundColor = 'gray';
         alTab.style.border = '1px solid black';
         if (stat === "avg"){
-                getAvgData(currentSeason);
+                getData(currentSeason, "avg")
         }
         if (stat === "era"){
                 getERAData(currentSeason);
@@ -336,7 +336,7 @@ function switchToAL(){
         alTab.style.border = '2px solid black';
         league = "al";
         if (stat === "avg"){
-                getAvgData(currentSeason);
+                getData(currentSeason, "avg")
         }
         if (stat === "era"){
                 getERAData(currentSeason);
@@ -357,7 +357,7 @@ function switchToFL(){
         flTab.style.border = '2px solid black';
         league = "fl";
         if (stat === "avg"){
-                getAvgData(currentSeason);
+                getData(currentSeason, "avg")
         }
         if (stat === "era"){
                 getERAData(currentSeason);
@@ -367,7 +367,7 @@ function processInput(){
         const seasonInputElement = document.getElementById("seasonInput");
         currentSeason = seasonInputElement.value;
         if (stat === "avg"){
-                getAvgData(currentSeason);
+                getData(currentSeason, "avg")
         }
         if (stat === "era"){
                 getERAData(currentSeason);
@@ -376,7 +376,7 @@ function processInput(){
 function showMorePlayers(){
         playersShown += 20;
         if (stat === "avg"){
-                getAvgData(currentSeason);
+                getData(currentSeason, "avg")
         }
         if (stat === "era"){
                 getERAData(currentSeason);
